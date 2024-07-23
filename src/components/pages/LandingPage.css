@@ -1,0 +1,63 @@
+.landing-page {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    margin-bottom: 50px;
+  }
+  
+  .cards {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .card {
+    background-color: #1c1c1c;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .card-content {
+    margin-top: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .card button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sign-up-button {
+    background-color: #bdbdbd;
+    color: black;
+  }
+
+  .host-sign-up-button {
+    background-color: #6200ea;
+    color: white;
+    float: right;
+  }
+  
