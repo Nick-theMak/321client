@@ -12,6 +12,7 @@ import CompetitionHomePage from './components/pages/CompetitionHomePage';
 import ChallengesList from './components/pages/ChallengesList';
 import Leaderboard from './components/pages/Leaderboard';
 import EnterCompetition from './components/pages/EnterCompetition';
+import AccessabilityOptions from './components/pages/AccessabilityOptions';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/enter-competition" element={<EnterCompetition />} />
         <Route path="*" element={<div>Page Not Found</div>} />
+        <Route path-="/accessabiltiy-options" element={<AccessabilityOptions/>} />
       </Routes>
     </Router>
   );

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
+import './DrawAppBar.css';
+import '../../assets/images/ctf-logo.webp';
+
 
 const DrawerAppBar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -18,33 +21,39 @@ const DrawerAppBar = () => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" className='appBar'>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
+          <div className='logoContainer'>
+            <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
+            {/* <Typography  variant="h6" style={{ flexGrow: 1 }} className='navBarHeader'>
             Capture the Future
-          </Typography>
+            </Typography> */}
+          </div>
           <Button color="inherit" onClick={() => navigate('/login')}>Sign In</Button>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
+      <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} classes={{ paper: 'drawerPaper' }} >
         <List>
-          <ListItem button onClick={() => handleNavigation('/dashboard')}>
-            <ListItemText primary="Competition Home Page" />
+        <ListItem button onClick={() => handleNavigation('/dashboard')}>
+            <ListItemText primary="Competition Home Page" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/dashboard/challenges-list')}>
-            <ListItemText primary="Challenges List" />
+            <ListItemText primary="Challenges List" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/dashboard/leaderboard')}>
-            <ListItemText primary="Leaderboard" />
+            <ListItemText primary="Leaderboard" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/dashboard/account-management')}>
-            <ListItemText primary="Account Management" />
+            <ListItemText primary="Account Management" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/dashboard/past-competitions')}>
-            <ListItemText primary="Past Competitions" />
+            <ListItemText primary="Past Competitions" classes={{ primary: 'listItemText' }} />
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/dashboard/accessibility-options')}>
+            <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
           </ListItem>
         </List>
       </Drawer>

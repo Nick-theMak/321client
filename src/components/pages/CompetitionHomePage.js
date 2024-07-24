@@ -1,27 +1,32 @@
 import React from 'react';
 import './CompetitionHomePage.css';
 import ChallengeCard from '../elements/ChallengeCard';
+import '../../assets/images/OSINT.jpg'
+import '../../assets/images/cryptography.jpg'
+import '../../assets/images/exploit.png'
+import '../../assets/images/networking.png'
+
 
 const challenges = [
   {
     title: 'Cryptography',
     description: 'Try your hand at some encryption, decryption, and code-breaking. Every cipher holds a secret waiting to be unveiled, are you ready?',
-    imgSrc: 'path-to-cryptography-image'
+    imgSrc: require('../../assets/images/cryptography.jpg')
   },
   {
     title: 'Open Source Intelligence (OSINT)',
     description: 'Delve into the realm of digital investigation and intelligence gathering. Sift through the noise, piece together clues, and unravel mysteries using publicly available data.',
-    imgSrc: 'path-to-osint-image'
+    imgSrc: require('../../assets/images/OSINT.jpg')
   },
   {
     title: 'Web Exploitation',
     description: 'Welcome to the frontier of cyber adventure, where the web becomes your playground and exploitation is the name of the game! Uncover vulnerabilities in our challenges and prove yourself!',
-    imgSrc: 'path-to-web-exploitation-image'
+    imgSrc: require('../../assets/images/exploit.png')
   },
   {
     title: 'Networking',
     description: 'We invite you to dive into the dynamic world of our networking challenges. Gear up for an immersive experience where every connection counts and every packet tells a story.',
-    imgSrc: 'path-to-networking-image'
+    imgSrc: require('../../assets/images/networking.png')
   }
 ];
 
