@@ -1,5 +1,5 @@
 .landing-page {
-    background-color: black;
+    background-color: #080705;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
   
   .logo {
     margin-bottom: 50px;
+    
   }
   
   .cards {
@@ -29,6 +30,7 @@
     width: 100%;
     height: auto;
     border-radius: 10px;
+    align-content: center;
   }
   
   .card-content {

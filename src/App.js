@@ -24,8 +24,9 @@ function App() {
         <Route path="/host-signup" element={<HostSignupScreen />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/enter-competition" element={<EnterCompetition />} />
+        <Route path="/accessabiltiy-options" element={<AccessabilityOptions/>} />
         <Route path="*" element={<div>Page Not Found</div>} />
-        <Route path-="/accessabiltiy-options" element={<AccessabilityOptions/>} />
+        
       </Routes>
     </Router>
   );

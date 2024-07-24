@@ -30,11 +30,25 @@
 
 .drawerPaper {
     background-color: #1d1b20 !important;
-
+    padding-right: 100px;
 }
 
 .listItemText {
     font-size: 0.875rem; /* Adjust the font size as needed */
     color: #e8def8;
     font-family: Arial, sans-serif;
+}
+
+.divider {
+    background-color: #e8def8; /* Adjust color as needed */
+    border-top: 8px solid;
+    border-radius: 5px;
+    padding-right: 100px;
+
+}
+
+.heading {
+    color: #e8def8;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
 }

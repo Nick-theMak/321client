@@ -11,7 +11,7 @@ function StudentLoginScreen() {
     return (
         <div className="login-container">
             <header className="login-header">
-                <img src={require('../../assets/images/ctf-logo.webp')} alt="Capture the Future" className="logo" />
+                <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
             </header>
             <div className="login-form">
                 <div className="header-row">

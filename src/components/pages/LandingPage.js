@@ -19,10 +19,10 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      <img src={require('../../assets/images/ctf-logo.webp')} alt="Capture the Future" className="logo" />
+      <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
       <div className="cards">
         <div className="card">
-          <img src={require('../../assets/images/ctf-logo.webp')} alt="Student" />
+          <img src={require('../../assets/images/user.png')} alt="Student" />
           <div className="card-content">
             <h3>Student?</h3>
             <p>Enter a competition</p>
@@ -33,7 +33,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="card">
-          <img src={require('../../assets/images/ctf-logo.webp')} alt="Teacher or Business" />
+          <img src={require('../../assets/images/users.png')} alt="Teacher or Business" />
           <div className="card-content">
             <h3>Teacher or Business?</h3>
             <p>Host a competition</p>
