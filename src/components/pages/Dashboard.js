@@ -7,6 +7,7 @@ import Leaderboard from './Leaderboard';
 import AccountManagement from './AccountManagement';
 import PastCompetitions from './PastCompetitions';
 import AccessabilityOptions from './AccessabilityOptions';
+import AdminDashboard from './AdminDashboard';
 
 const Dashboard = () => {
   return (
@@ -19,6 +20,9 @@ const Dashboard = () => {
         <Route path="account-management" element={<AccountManagement />} />
         <Route path="past-competitions" element={<PastCompetitions />} />
         <Route path="accessability-options" element={<AccessabilityOptions />} />
+        <Route path="admin-dashboard" element={<AdminDashboard />} />
+
+        <Route path="" element={<AccessabilityOptions />} />
       </Routes>
     </div>
   );

@@ -63,6 +63,10 @@ const DrawerAppBar = () => {
           <ListItem button onClick={() => handleNavigation('/dashboard/accessability-options')}>
             <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
           </ListItem>
+          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold'  }}>Admin Options</Typography>
+          <ListItem button onClick={() => handleNavigation('/dashboard/admin-dashboard')}>
+            <ListItemText primary="Admin Dashboard" classes={{ primary: 'listItemText' }} />
+          </ListItem>
         </List>
       </Drawer>
     </>
