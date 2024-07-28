@@ -68,14 +68,14 @@ label {
 
 .input-field-email {
     width: 100%;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .input-field-password {
     width: 100%;
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .remember-me {

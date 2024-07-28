@@ -18,15 +18,3 @@
   h1 {
     font: 400 38px/1.5 'Roboto', sans-serif;
 }
-  
-  .modalContent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
