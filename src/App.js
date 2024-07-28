@@ -12,7 +12,7 @@ import CompetitionHomePage from './components/pages/CompetitionHomePage';
 import ChallengesList from './components/pages/ChallengesList';
 import Leaderboard from './components/pages/Leaderboard';
 import EnterCompetition from './components/pages/EnterCompetition';
-import AccessabilityOptions from './components/pages/AccessabilityOptions';
+import AccessibilityOptions from './components/pages/AccessibilityOptions';
 import AdminDashboard from './components/pages/AdminDashboard';
 
 
@@ -22,11 +22,11 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<StudentLoginScreen />} />
-       <Route path="/student-signup" element={<StudentSignupScreen />} />
+        <Route path="/student-signup" element={<StudentSignupScreen />} />
         <Route path="/host-signup" element={<HostSignupScreen />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/enter-competition" element={<EnterCompetition />} />
-        <Route path="/accessabiltiy-options" element={<AccessabilityOptions/>} />
+        <Route path="/accessibility-options" element={<AccessibilityOptions/>} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="*" element={<div>Page Not Found</div>} />
         
