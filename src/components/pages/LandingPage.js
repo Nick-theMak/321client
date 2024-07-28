@@ -22,7 +22,7 @@ const LandingPage = () => {
       <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
       <div className="cards">
         <div className="card">
-          <img src={require('../../assets/images/user.png')} alt="Student" />
+          <img src={require('../../assets/images/students.jpg')} alt="Student" />
           <div className="card-content">
             <h3>Student?</h3>
             <p>Enter a competition</p>
@@ -33,7 +33,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="card">
-          <img src={require('../../assets/images/users.png')} alt="Teacher or Business" />
+          <img src={require('../../assets/images/teacher.jpg')} alt="Teacher or Business" />
           <div className="card-content">
             <h3>Teacher or Business?</h3>
             <p>Host a competition</p>

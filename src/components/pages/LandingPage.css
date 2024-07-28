@@ -19,7 +19,7 @@
   
   .card {
     background-color: #1c1c1c;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -28,7 +28,7 @@
   
   .card img {
     width: 100%;
-    height: auto;
+    height: 300px;
     border-radius: 10px;
     align-content: center;
   }

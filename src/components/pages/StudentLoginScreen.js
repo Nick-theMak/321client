@@ -5,9 +5,11 @@ import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
-
+import { useNavigate } from 'react-router-dom';
 
 function StudentLoginScreen() {
+
+    const navigate = useNavigate();
     return (
         <div className="login-container">
             <header className="login-header">
@@ -37,7 +39,7 @@ function StudentLoginScreen() {
                         <md-checkbox></md-checkbox>
                         <label>Remember Me</label>
                     </div>
-                    <md-filled-button>Sign in</md-filled-button>
+                    <md-filled-button onClick={() => navigate('/dashboard')}>Sign in</md-filled-button>
                 </form>
                 <div className="account-links">
                     <a href="/student-signup">Create Student Account</a>
