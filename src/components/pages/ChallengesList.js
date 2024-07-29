@@ -48,7 +48,7 @@ const ChallengesList = () => {
 
   const filteredChallenges = challenges.filter((challenge) => {
     return (
-      challenge.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      challenge.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (difficultyFilter === '' || challenge.difficulty === difficultyFilter)
     );
   });
@@ -93,9 +93,9 @@ const ChallengesList = () => {
           </TableHead>
           <TableBody>
             {filteredChallenges.map((challenge) => (
-              <TableRow key={challenge.id} className="table-row">
+              <TableRow key={challenge.challengeId} className="table-row">
                 <TableCell component="th" scope="row">
-                  {challenge.title}
+                  {challenge.name}
                 </TableCell>
                 <TableCell>{challenge.description}</TableCell>
                 <TableCell>{challenge.difficulty}</TableCell>
