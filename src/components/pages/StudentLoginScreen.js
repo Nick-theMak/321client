@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
-import { useNavigate } from 'react-router-dom';
 
 function StudentLoginScreen() {
-
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            await login(email, password);
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Login failed", error);
+        }
+    };
+
+
     return (
         <div className="login-container">
             <header className="login-header">
@@ -20,13 +34,15 @@ function StudentLoginScreen() {
                     <h2>Login</h2>
                     <h5>Have a question? Get help.<md-icon>help</md-icon></h5>
                 </div>
-                <form>
+                <form onSubmit={handleLogin}>
                     <md-outlined-text-field
                         label="Username/Email"
-                        type="email"
+                        type="username"
                         placeholder="student@email.com"
                         class="input-field-email"
                         supporting-text="Please enter either your username or email address."
+                        value={email}
+                        onInput={(e) => setEmail(e.target.value)}
                     ></md-outlined-text-field>
                     <md-outlined-text-field
                         label="Password"
@@ -34,6 +50,8 @@ function StudentLoginScreen() {
                         placeholder="*******"
                         class="input-field-password"
                         supporting-text="Please enter your password."
+                        value={password}
+                        onInput={(e) => setPassword(e.target.value)}
                     ></md-outlined-text-field>
                     <div className="remember-me">
                         <md-checkbox></md-checkbox>

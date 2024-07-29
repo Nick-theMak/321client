@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/pages/LandingPage';
 import StudentLoginScreen from './components/pages/StudentLoginScreen';
 
-import StudentSignupScreen from './components/pages/StudentSignup';
+import StudentSignupScreen from './components/pages/StudentSignupScreen';
 import HostSignupScreen from './components/pages/HostSignup';
 import Dashboard from './components/pages/Dashboard';
 import AccountManagement from './components/pages/AccountManagement';
