@@ -5,7 +5,7 @@ import '../../assets/images/OSINT.jpg'
 import '../../assets/images/cryptography.jpg'
 import '../../assets/images/exploit.png'
 import '../../assets/images/networking.png'
-
+import { Typography } from '@mui/material';
 
 const challenges = [
   {
@@ -33,19 +33,21 @@ const challenges = [
 const CompetitionHomePage = () => {
   return (
     <div className="competition-home-page">
-      <h1>Welcome Alice!</h1>
+      <Typography variant="h5" className="header">
+        Welcome Alice!
+      </Typography>
       <div className="stats">
         <div className="stat">
-          <h3>Current Team Points</h3>
+          <h4>Current Team Points</h4>
           <p>200</p>
         </div>
         <div className="stat">
-          <h3>Current Ranking</h3>
+          <h4>Current Ranking</h4>
           <p>2/10</p>
         </div>
       </div>
-      <h2>Start a Challenge</h2>
-      <button className="view-all-challenges-button">View All Challenges</button>
+      {/* <h2>Start a Challenge</h2>
+      <button className="view-all-challenges-button">View All Challenges</button> */}
       <div className="challenges-carousel">
         {challenges.map((challenge, index) => (
           <ChallengeCard

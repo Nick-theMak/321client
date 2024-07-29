@@ -24,8 +24,10 @@ function App() {
 
   return (
     <Container maxWidth="md">
-      <h1>Past Competitions</h1>
-      <h3>View your history of completing Capture The Future competitions</h3>
+      <Typography variant="h5" className="header">
+        Past Competitions
+      </Typography>
+      <p>View your history of completing Capture The Future competitions</p>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

@@ -24,8 +24,10 @@ function App() {
 
   return (
     <Container maxWidth="md">
-      <h1>Leaderboard</h1>
-      <h3>View your team's rank</h3>
+      <Typography variant="h5" className="header">
+        Leaderboard
+      </Typography>
+      <p>View your team's rank</p>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

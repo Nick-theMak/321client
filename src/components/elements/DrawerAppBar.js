@@ -60,8 +60,15 @@ const DrawerAppBar = () => {
           <ListItem button onClick={() => handleNavigation('/dashboard/past-competitions')}>
             <ListItemText primary="Past Competitions" classes={{ primary: 'listItemText' }} />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/dashboard/accessability-options')}>
+          <ListItem button onClick={() => handleNavigation('/dashboard/accessibility-options')}>
             <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
+          </ListItem>
+          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold'  }}>Host Options</Typography>
+          <ListItem button onClick={() => handleNavigation('/dashboard/accessibility-options')}>
+            <ListItemText primary="Host Dashboard" classes={{ primary: 'listItemText' }} />
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/dashboard/accessibility-options')}>
+            <ListItemText primary="Host Competition History" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold'  }}>Admin Options</Typography>
           <ListItem button onClick={() => handleNavigation('/dashboard/admin-dashboard')}>
