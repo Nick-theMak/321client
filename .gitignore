@@ -24,4 +24,4 @@ yarn-error.log*
 
 # local files
 
-./src/components/networking/url.js
+src/components/networking/url.js
