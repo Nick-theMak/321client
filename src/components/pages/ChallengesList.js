@@ -76,9 +76,9 @@ const ChallengesList = () => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value="Easy">Easy</MenuItem>
-          <MenuItem value="Medium">Medium</MenuItem>
-          <MenuItem value="Hard">Hard</MenuItem>
+          <MenuItem value="Beginner">Beginner</MenuItem>
+          <MenuItem value="Intermediate">Intermediate</MenuItem>
+          <MenuItem value="Advanced">Advanced</MenuItem>
         </Select>
       </FormControl>
       <TableContainer component={Paper}>
