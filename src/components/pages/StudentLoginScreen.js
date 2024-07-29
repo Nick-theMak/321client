@@ -1,26 +1,48 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../networking/api";
+import { api } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
+import { TextField, Button, Typography, Checkbox, FormControlLabel } from '@mui/material';
+
 
 function StudentLoginScreen() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
+    const [formData, setFormData] = useState({
+      username: '',
+      password: ''
+    });
+  
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    };
+  
     const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await login(email, password);
-            navigate("/dashboard");
-        } catch (error) {
-            console.error("Login failed", error);
-        }
+      e.preventDefault();
+  
+      const loginData = {
+        username: formData.username,
+        password: formData.password
+      };
+
+      console.log(loginData);
+  
+      try {
+        const response = await api.post('/user/login', loginData);
+        console.log("Login successful:", response.data);
+        console.log(response.data.details.token);
+        localStorage.setItem('token', response.data.details.token);
+        navigate('/dashboard'); // Redirect to the dashboard or any other page
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
     };
 
 
@@ -35,38 +57,41 @@ function StudentLoginScreen() {
                     <h5>Have a question? Get help.<md-icon>help</md-icon></h5>
                 </div>
                 <form onSubmit={handleLogin}>
-                    <md-outlined-text-field
-                        label="Username/Email"
-                        type="username"
-                        placeholder="student@email.com"
-                        class="input-field-email"
-                        supporting-text="Please enter either your username or email address."
-                        value={email}
-                        onInput={(e) => setEmail(e.target.value)}
-                    ></md-outlined-text-field>
-                    <md-outlined-text-field
+                <TextField
+                        label="Username"
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        placeholder="student123"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please enter either your username or email address."
+                    />
+                    <TextField
                         label="Password"
                         type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
                         placeholder="*******"
-                        class="input-field-password"
-                        supporting-text="Please enter your password."
-                        value={password}
-                        onInput={(e) => setPassword(e.target.value)}
-                    ></md-outlined-text-field>
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please enter your password."
+                    />
                     <div className="remember-me">
                         <md-checkbox></md-checkbox>
                         <label>Remember Me</label>
                     </div>
-                    <md-filled-button onClick={() => navigate('/dashboard')}>Sign in</md-filled-button>
+                    <md-filled-button onClick={handleLogin}>Sign in</md-filled-button>
                 </form>
                 <div className="account-links">
                     <a href="/student-signup">Create Student Account</a>
                     <a href="/host-signup">Create Host Account</a>
                 </div>
             </div>
-            {/* <footer className="help-link">
-                <a href="#">Have a question? Get help.</a>
-            </footer> */}
         </div>
     );
 }
