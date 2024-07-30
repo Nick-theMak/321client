@@ -20,13 +20,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<StudentLoginScreen />} />
-       <Route path="/student-signup" element={<StudentSignupScreen />} />
+        <Route path="/student-signup" element={<StudentSignupScreen />} />
         <Route path="/host-signup" element={<HostSignupScreen />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/enter-competition" element={<EnterCompetition />} />
         <Route path="/accessabiltiy-options" element={<AccessabilityOptions/>} />
+        <Route path="/account-management" element={<AccountManagement />} />
         <Route path="*" element={<div>Page Not Found</div>} />
-        
       </Routes>
     </Router>
   );
