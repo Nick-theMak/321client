@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { TextField } from '@mui/material';
+import { api } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
@@ -9,19 +11,49 @@ import './StudentLoginScreen.css';
 
 function HostSignupScreen() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        school: ''
+    });
 
-    const handleSignup = (e) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSignup = async (e) => {
         e.preventDefault();
-        // Implement your sign-up logic here
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
 
-        // After successful sign-up, redirect to the login page
-        navigate('/login');
+        const teacherData = {
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+            school: formData.school
+        };
+
+        try {
+            const response = await api.post('/user/teacher', teacherData);
+            console.log("Signup successful:", response.data);
+            navigate('/login');
+        } catch (error) {
+            console.error("Signup failed:", error);
+        }
     };
 
     return (
         <div className="login-container">
             <header className="login-header">
-                <img src={require('../../assets/images/ctf-logo.webp')} alt="Capture the Future" className="logo" />
+                <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
             </header>
             <div className="login-form">
                 <div className="header-row">
@@ -29,41 +61,66 @@ function HostSignupScreen() {
                     <h5>Have a question? Get help.<md-icon>help</md-icon></h5>
                 </div>
                 <form onSubmit={handleSignup}>
-                    <md-outlined-text-field
-                        label="Username/Email"
+                    <TextField
+                        label="Email"
                         type="email"
-                        placeholder="student@email.com"
-                        class="input-field-email"
-                        supporting-text="Please enter either your username or email address."
-                    ></md-outlined-text-field>
-                    <md-outlined-text-field
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="teacher@email.com"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please enter your email address."
+                    />
+                    <TextField
                         label="Username"
-                        type="username"
-                        placeholder="e.g. student123"
-                        class="input-field-password"
-                        supporting-text="Please enter your username."
-                    ></md-outlined-text-field>
-                    <md-outlined-text-field
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        placeholder="e.g. teacher123"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please enter your username."
+                    />
+                    <TextField
                         label="Password"
                         type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
                         placeholder="*******"
-                        class="input-field-password"
-                        supporting-text="Please enter your password."
-                    ></md-outlined-text-field>
-                    <md-outlined-text-field
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please enter your password."
+                    />
+                    <TextField
                         label="Confirm Password"
                         type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
                         placeholder="*******"
-                        class="input-field-password"
-                        supporting-text="Please confirm your password."
-                    ></md-outlined-text-field>
-                    <md-outlined-text-field
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Please confirm your password."
+                    />
+                    <TextField
                         label="School"
                         type="text"
+                        name="school"
+                        value={formData.school}
+                        onChange={handleChange}
                         placeholder="e.g Cybersecurity High School"
-                        class="input-field-email"
-                        supporting-text="Enter the school you are teachin in"
-                    ></md-outlined-text-field>
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        helperText="Enter the school you are teaching in"
+                    />
                     <md-filled-button type="submit">Create Account</md-filled-button>
                     <md-outlined-button type="button" onClick={() => navigate('/login')}>Sign in</md-outlined-button>
                 </form>
