@@ -9,7 +9,7 @@ import PastCompetitions from './PastCompetitions';
 import AccessibilityOptions from './AccessibilityOptions';
 import AdminDashboard from './AdminDashboard';
 
-const Dashboard = () => {
+const StudentDashboard = () => {
   return (
     <div>
       <DrawerAppBar />
@@ -26,4 +26,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default StudentDashboard;

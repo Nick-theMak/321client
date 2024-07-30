@@ -5,7 +5,8 @@ import StudentLoginScreen from './components/pages/StudentLoginScreen';
 
 import StudentSignupScreen from './components/pages/StudentSignupScreen';
 import HostSignupScreen from './components/pages/HostSignup';
-import Dashboard from './components/pages/Dashboard';
+import StudentDashboard from './components/pages/StudentDashboard';
+import HostDashboard from './components/pages/HostDashboard';
 import AccountManagement from './components/pages/AccountManagement';
 import PastCompetitions from './components/pages/PastCompetitions';
 import CompetitionHomePage from './components/pages/CompetitionHomePage';
@@ -24,15 +25,11 @@ function App() {
         <Route path="/login" element={<StudentLoginScreen />} />
         <Route path="/student-signup" element={<StudentSignupScreen />} />
         <Route path="/host-signup" element={<HostSignupScreen />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/student-dashboard/*" element={<StudentDashboard />} />
+        <Route path="/host-dashboard/*" element={<HostDashboard />} /> 
         <Route path="/enter-competition" element={<EnterCompetition />} />
-<<<<<<< HEAD
-        <Route path="/accessabiltiy-options" element={<AccessabilityOptions/>} />
-        <Route path="/account-management" element={<AccountManagement />} />
-=======
         <Route path="/accessibility-options" element={<AccessibilityOptions/>} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
->>>>>>> 054cfc740c4e1400ca9be831ebd16c7c80587cab
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </Router>

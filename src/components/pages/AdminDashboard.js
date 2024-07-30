@@ -104,113 +104,115 @@ const AdminDashboard = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <><header className="login-header">
+      <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
+    </header><Container maxWidth="md">
         <h1>Admin Dashboard</h1>
-      
+
         <h3>User Management</h3>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="right">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id} className="table-row">
-                <TableCell component="th" scope="row">
-                  {user.name}
-                </TableCell>
-                <TableCell align="center">{user.email}</TableCell>
-                <TableCell align="right">
-                  <Button variant="contained" color="primary" onClick={() => handleOpenEditUserModal(user)}>Edit</Button>
-                  <Button variant="contained" color="secondary" onClick={() => handleOpenDeleteUserModal(user)} style={{ marginLeft: '10px' }}>Delete</Button>
-                </TableCell>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id} className="table-row">
+                  <TableCell component="th" scope="row">
+                    {user.name}
+                  </TableCell>
+                  <TableCell align="center">{user.email}</TableCell>
+                  <TableCell align="right">
+                    <Button variant="contained" color="primary" onClick={() => handleOpenEditUserModal(user)}>Edit</Button>
+                    <Button variant="contained" color="secondary" onClick={() => handleOpenDeleteUserModal(user)} style={{ marginLeft: '10px' }}>Delete</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      <h3>Challenge Management</h3>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell align="center">Description</TableCell>
-              <TableCell align="right">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {challenges.map((challenge) => (
-              <TableRow key={challenge.id} className="table-row">
-                <TableCell component="th" scope="row">
-                  {challenge.title}
-                </TableCell>
-                <TableCell align="center">{challenge.description}</TableCell>
-                <TableCell align="right">
-                  <Button variant="contained" color="primary" onClick={() => handleOpenEditChallengeModal(challenge)}>Edit</Button>
-                  <Button variant="contained" color="secondary" onClick={() => handleOpenDeleteChallengeModal(challenge)} style={{ marginLeft: '10px' }}>Delete</Button>
-                </TableCell>
+        <h3>Challenge Management</h3>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell align="center">Description</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {challenges.map((challenge) => (
+                <TableRow key={challenge.id} className="table-row">
+                  <TableCell component="th" scope="row">
+                    {challenge.title}
+                  </TableCell>
+                  <TableCell align="center">{challenge.description}</TableCell>
+                  <TableCell align="right">
+                    <Button variant="contained" color="primary" onClick={() => handleOpenEditChallengeModal(challenge)}>Edit</Button>
+                    <Button variant="contained" color="secondary" onClick={() => handleOpenDeleteChallengeModal(challenge)} style={{ marginLeft: '10px' }}>Delete</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      <Modal open={isEditUserModalOpen} onClose={handleCloseModal}>
-        <Box className="modalContent">
-          <Typography variant="h6">Edit User</Typography>
-          <form onSubmit={handleSaveUser}>
-            <TextField fullWidth margin="normal" name="name" label="Name" value={userFormData.name} onChange={handleUserChange} />
-            <TextField fullWidth margin="normal" name="email" label="Email" value={userFormData.email} onChange={handleUserChange} />
+        <Modal open={isEditUserModalOpen} onClose={handleCloseModal}>
+          <Box className="modalContent">
+            <Typography variant="h6">Edit User</Typography>
+            <form onSubmit={handleSaveUser}>
+              <TextField fullWidth margin="normal" name="name" label="Name" value={userFormData.name} onChange={handleUserChange} />
+              <TextField fullWidth margin="normal" name="email" label="Email" value={userFormData.email} onChange={handleUserChange} />
+              <Box display="flex" justifyContent="flex-end" mt={2}>
+                <Button type="submit" variant="contained" color="primary">Save</Button>
+                <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
+              </Box>
+            </form>
+          </Box>
+        </Modal>
+
+        <Modal open={isDeleteUserModalOpen} onClose={handleCloseModal}>
+          <Box className="modalContent">
+            <Typography variant="h6">Delete User</Typography>
+            <Typography>Are you sure you want to delete {selectedUser?.name}?</Typography>
             <Box display="flex" justifyContent="flex-end" mt={2}>
-              <Button type="submit" variant="contained" color="primary">Save</Button>
+              <Button onClick={handleDeleteUser} variant="contained" color="secondary">Delete</Button>
               <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
             </Box>
-          </form>
-        </Box>
-      </Modal>
-
-      <Modal open={isDeleteUserModalOpen} onClose={handleCloseModal}>
-        <Box className="modalContent">
-          <Typography variant="h6">Delete User</Typography>
-          <Typography>Are you sure you want to delete {selectedUser?.name}?</Typography>
-          <Box display="flex" justifyContent="flex-end" mt={2}>
-            <Button onClick={handleDeleteUser} variant="contained" color="secondary">Delete</Button>
-            <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
           </Box>
-        </Box>
-      </Modal>
+        </Modal>
 
-      <Modal open={isEditChallengeModalOpen} onClose={handleCloseModal}>
-        <Box className="modalContent">
-          <Typography variant="h6">Edit Challenge</Typography>
-          <form onSubmit={handleSaveChallenge}>
-            <TextField fullWidth margin="normal" name="title" label="Title" value={challengeFormData.title} onChange={handleChallengeChange} />
-            <TextField fullWidth margin="normal" name="description" label="Description" value={challengeFormData.description} onChange={handleChallengeChange} />
+        <Modal open={isEditChallengeModalOpen} onClose={handleCloseModal}>
+          <Box className="modalContent">
+            <Typography variant="h6">Edit Challenge</Typography>
+            <form onSubmit={handleSaveChallenge}>
+              <TextField fullWidth margin="normal" name="title" label="Title" value={challengeFormData.title} onChange={handleChallengeChange} />
+              <TextField fullWidth margin="normal" name="description" label="Description" value={challengeFormData.description} onChange={handleChallengeChange} />
+              <Box display="flex" justifyContent="flex-end" mt={2}>
+                <Button type="submit" variant="contained" color="primary">Save</Button>
+                <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
+              </Box>
+            </form>
+          </Box>
+        </Modal>
+
+        <Modal open={isDeleteChallengeModalOpen} onClose={handleCloseModal}>
+          <Box className="modalContent">
+            <Typography variant="h6">Delete Challenge</Typography>
+            <Typography>Are you sure you want to delete {selectedChallenge?.title}?</Typography>
             <Box display="flex" justifyContent="flex-end" mt={2}>
-              <Button type="submit" variant="contained" color="primary">Save</Button>
+              <Button onClick={handleDeleteChallenge} variant="contained" color="secondary">Delete</Button>
               <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
             </Box>
-          </form>
-        </Box>
-      </Modal>
-
-      <Modal open={isDeleteChallengeModalOpen} onClose={handleCloseModal}>
-        <Box className="modalContent">
-          <Typography variant="h6">Delete Challenge</Typography>
-          <Typography>Are you sure you want to delete {selectedChallenge?.title}?</Typography>
-          <Box display="flex" justifyContent="flex-end" mt={2}>
-            <Button onClick={handleDeleteChallenge} variant="contained" color="secondary">Delete</Button>
-            <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
           </Box>
-        </Box>
-      </Modal>
-    </Container>
+        </Modal>
+      </Container></>
   );
 };
 

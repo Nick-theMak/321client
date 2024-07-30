@@ -6,7 +6,7 @@ import './DrawAppBar.css';
 import '../../assets/images/ctf-logo.webp';
 
 
-const DrawerAppBar = () => {
+const HostDrawerAppBar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -32,42 +32,46 @@ const DrawerAppBar = () => {
             Capture the Future
             </Typography> */}
           </div>
-          <Button color="inherit" onClick={() => navigate('/login')}>Sign In</Button>
+          <Button color="inherit" onClick={() => navigate('/competition-list')}>Competition</Button>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} classes={{ paper: 'drawerPaper' }} >
         <List>
 
-          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold' }}>Competition Options</Typography>
-        <ListItem button onClick={() => handleNavigation('/student-dashboard')}>
-            <ListItemText primary="Competition Home Page" classes={{ primary: 'listItemText' }} />
+          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold' }}>Competition </Typography>
+        <ListItem button onClick={() => handleNavigation('/host-dashboard')}>
+            <ListItemText primary="Host Home Page" classes={{ primary: 'listItemText' }} />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/student-dashboard/challenges-list')}>
-            <ListItemText primary="Challenges List" classes={{ primary: 'listItemText' }} />
+          <ListItem button onClick={() => handleNavigation('/host-dashboard/start-competition')}>
+            <ListItemText primary="Start Competition" classes={{ primary: 'listItemText' }} />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/student-dashboard/leaderboard')}>
-            <ListItemText primary="Leaderboard" classes={{ primary: 'listItemText' }} />
+          <ListItem button onClick={() => handleNavigation('/host-dashboard/past-competitions')}>
+            <ListItemText primary="Past Competitions" classes={{ primary: 'listItemText' }} />
           </ListItem>
+
 
           {/* Spacer */}
           {/*<Divider className='divider' variant="middle" component="li"/>*/}
-          
+          <hr></hr>
+          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold'  }}>Profile </Typography>
+
+          <br></br>
+
           {/* Profile options */}
-          <Typography className='heading' style={{ padding: '10px 13px', fontWeight: 'bold'  }}>Profile Options</Typography>
-          <ListItem button onClick={() => handleNavigation('/student-dashboard/account-management')}>
+          <ListItem button onClick={() => handleNavigation('/host-dashboard/account-management')}>
             <ListItemText primary="Account Management" classes={{ primary: 'listItemText' }} />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/student-dashboard/past-competitions')}>
-            <ListItemText primary="Past Competitions" classes={{ primary: 'listItemText' }} />
-          </ListItem>
-          <ListItem button onClick={() => handleNavigation('/student-dashboard/accessibility-options')}>
+          <ListItem button onClick={() => handleNavigation('/host-dashboard/accessibility-options')}>
             <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
           </ListItem>
-
+          <br></br>
+          <ListItem button onClick={() => handleNavigation('/')}>
+            <ListItemText primary="Log Out" classes={{ primary: 'listItemText' }} />
+          </ListItem>
         </List>
       </Drawer>
     </>
   );
 };
 
-export default DrawerAppBar;
+export default HostDrawerAppBar;
