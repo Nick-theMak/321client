@@ -53,6 +53,17 @@ export const login = async (username, password) => {
     }
 };
 
+export const logout = async () => {
+    try {
+        await api.post("/user/logout")
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+    } catch (error) {
+        console.error("Logout failed", error);
+        throw error;
+    }
+}
+
 export const loadUserDetails = async (username) => {
     try {
         const response = await api.get(`/user/username/${username}`);

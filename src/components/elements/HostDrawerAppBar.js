@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../networking/api';
 import './DrawAppBar.css';
 import '../../assets/images/ctf-logo.webp';
 
@@ -18,6 +19,11 @@ const HostDrawerAppBar = () => {
     navigate(path);
     setDrawerOpen(false);
   };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  }
 
   return (
     <>
@@ -65,7 +71,7 @@ const HostDrawerAppBar = () => {
             <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
           </ListItem>
           <br></br>
-          <ListItem button onClick={() => handleNavigation('/')}>
+          <ListItem button onClick={() => handleLogout()}>
             <ListItemText primary="Log Out" classes={{ primary: 'listItemText' }} />
           </ListItem>
         </List>

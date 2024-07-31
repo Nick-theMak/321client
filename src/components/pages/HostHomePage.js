@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './HostDashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const HostHomePage = () => {
+  const [user, setUser] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const userDetails = JSON.parse(localStorage.getItem('user'));
+      if (userDetails) {
+        setUser(userDetails);
+        console.log(user);
+      } else {
+        navigate('/login');
+      }
+    }
+
+    loadUser();
+  }, [navigate]);
+
   return (
     <div>      
       <div className="host-dashboard">
         <div className="welcome-section">
-          <h1>Welcome Aaron!</h1>
+          <h1>Welcome {user.username}!</h1>
         </div>
         <div className="info-section">
           <div className="info-card">
