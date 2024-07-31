@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../networking/api';
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { loadChallenges } from '../networking/api';
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import './ChallengesList.css';
 
 const ChallengesList = () => {
@@ -11,14 +11,14 @@ const ChallengesList = () => {
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
-        const response = await api.get('challenge/all');
-        console.log(response.data);
-        setChallenges(response.data);
+        const challenges = await loadChallenges();
+        setChallenges(challenges);
       } catch (err) {
         console.error('Failed to fetch challenges', err);
-      } 
+      }
     };
 
+    // loadChallenges();
 
     fetchChallenges();
   }, []);
@@ -103,7 +103,7 @@ const ChallengesList = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handleStartChallenge(challenge.id)}
+                    onClick={() => handleStartChallenge(challenge.challengeId)}
                   >
                     Start
                   </Button>

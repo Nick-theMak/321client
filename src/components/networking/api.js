@@ -21,6 +21,26 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+export const loadChallenges = async () => {
+    try {
+        const response = await api.get("/challenge/all");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to load challenges", error);
+        throw error;
+    }
+}
+
+export const getAllUsers = async () => {
+    try {
+        const response = await api.get("/users");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to load users", error);
+        throw error;
+    }
+}
+
 export const login = async (username, password) => {
     try {
         const response = await axiosInstance.post("/user/login", { username, password });
@@ -33,6 +53,16 @@ export const login = async (username, password) => {
     }
 };
 
+export const loadUserDetails = async (username) => {
+    try {
+        const response = await api.get(`/user/username/${username}`);
+        // console.log("User details:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to load user details", error);
+        throw error;
+    }
+}
 
 export const signupStudent = async (studentData) => {
     try {

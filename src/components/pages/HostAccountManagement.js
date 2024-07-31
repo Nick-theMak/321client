@@ -5,9 +5,9 @@ import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
-import './AccountManagement.css';
+import './HostAccountManagement.css';
 
-function StudentSignupScreen() {
+function HostAccountManagement() {
     const navigate = useNavigate();
 
     const handleSignup = (e) => {
@@ -48,11 +48,11 @@ function StudentSignupScreen() {
                         supporting-text="Please enter your password."
                     ></md-outlined-text-field>
                     <md-outlined-text-field
-                        label="Year Level"
-                        type="number"
+                        label="School"
+                        type="text"
                         placeholder="e.g 8"
                         class="input-field-email"
-                        supporting-text="Enter your year level."
+                        supporting-text="Enter the name of your school."
                     ></md-outlined-text-field>
                     <md-filled-button type="submit">Save Your Details</md-filled-button>
                     <md-outlined-button type="button" onClick={() => navigate('/dashboard/past-competitions')}>View Competition History</md-outlined-button>
@@ -62,4 +62,4 @@ function StudentSignupScreen() {
     );
 }
 
-export default StudentSignupScreen;
+export default HostAccountManagement;

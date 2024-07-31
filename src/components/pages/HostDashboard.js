@@ -7,7 +7,7 @@ import HostHomePage from './HostHomePage';
 import StartCompetition from './StartCompetition';
 import HostPastCompetitions from './HostPastCompetitions';
 import HostCompetition from './HostCompetition';
-import AccountManagement from './AccountManagement';
+import HostAccountManagement from './HostAccountManagement';
 import AccessibilityOptions from './AccessibilityOptions';
 
 const HostDashboard = () => {
@@ -18,7 +18,7 @@ const HostDashboard = () => {
           <Route path="start-competition/*" element={<StartCompetition />} />
           <Route path="past-competitions" element={<HostPastCompetitions/>} />
           <Route path="/host-competition" element={<HostCompetition />} />
-          <Route path="account-management" element={<AccountManagement />} />
+          <Route path="account-management" element={<HostAccountManagement />} />
           <Route path="accessibility-options" element={<AccessibilityOptions />} />
       </Routes></>
     

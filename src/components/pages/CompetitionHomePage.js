@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CompetitionHomePage.css';
 import ChallengeCard from '../elements/ChallengeCard';
 import '../../assets/images/OSINT.jpg'
@@ -31,10 +32,27 @@ const challenges = [
 ];
 
 const CompetitionHomePage = () => {
+  const [user, setUser] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const userDetails = JSON.parse(localStorage.getItem('user'));
+      if (userDetails) {
+        setUser(userDetails);
+        console.log(user);
+      } else {
+        navigate('/login');
+      }
+    }
+
+    loadUser();
+  }, [navigate]);
+
   return (
     <div className="competition-home-page">
       <Typography variant="h5" className="header">
-        Welcome Alice!
+        Welcome {user.username}!
       </Typography>
       <div className="stats">
         <div className="stat">

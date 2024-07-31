@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { loadChallenges, getAllUsers } from '../networking/api';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, Modal, Box, TextField } from '@mui/material';
 import './AdminDashboard.css';
 
@@ -15,26 +16,47 @@ const AdminDashboard = () => {
   const [challengeFormData, setChallengeFormData] = useState({ title: '', description: '' });
 
   useEffect(() => {
-    // Mock data for users
-    const mockUsers = [
-      { id: 1, name: 'John Doe', email: 'john@example.com' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-      { id: 3, name: 'Alice Johnson', email: 'alice@example.com' },
-    ];
-    setUsers(mockUsers);
+    const fetchChallenges = async () => {
+      try {
+        const challenges = await loadChallenges();
+        setChallenges(challenges);
+      } catch (err) {
+        console.error('Failed to fetch challenges', err);
+      }
+    }
 
-    // Mock data for challenges
-    const mockChallenges = [
-      { id: 1, title: 'Challenge 1', description: 'Description for challenge 1' },
-      { id: 2, title: 'Challenge 2', description: 'Description for challenge 2' },
-      { id: 3, title: 'Challenge 3', description: 'Description for challenge 3' },
-    ];
-    setChallenges(mockChallenges);
+    const fetchAllUsers = async () => {
+      try {
+        const users = await getAllUsers();
+        setUsers(users);
+      } catch (err) {
+        console.error('Failed to fetch users', err);
+      }
+    }
+
+    // Mock data for users. Uncomment for testing purposes
+    // const mockUsers = [
+    //   { id: 1, name: 'John Doe', email: 'john@example.com' },
+    //   { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+    //   { id: 3, name: 'Alice Johnson', email: 'alice@example.com' },
+    // ];
+    // setUsers(mockUsers);
+
+    // Mock data for challenges. Uncomment for testing purposes.
+    // const mockChallenges = [
+    //   { id: 1, title: 'Challenge 1', description: 'Description for challenge 1' },
+    //   { id: 2, title: 'Challenge 2', description: 'Description for challenge 2' },
+    //   { id: 3, title: 'Challenge 3', description: 'Description for challenge 3' },
+    // ];
+    // setChallenges(mockChallenges);
+
+    fetchAllUsers();
+    fetchChallenges();
   }, []);
 
   const handleOpenEditUserModal = (user) => {
     setSelectedUser(user);
-    setUserFormData({ name: user.name, email: user.email });
+    setUserFormData({ name: user.username, email: user.email });
     setEditUserModalOpen(true);
   };
 
@@ -45,7 +67,7 @@ const AdminDashboard = () => {
 
   const handleOpenEditChallengeModal = (challenge) => {
     setSelectedChallenge(challenge);
-    setChallengeFormData({ title: challenge.title, description: challenge.description });
+    setChallengeFormData({ title: challenge.name, description: challenge.description });
     setEditChallengeModalOpen(true);
   };
 
@@ -76,14 +98,14 @@ const AdminDashboard = () => {
   const handleSaveUser = (e) => {
     e.preventDefault();
     const updatedUsers = users.map((user) =>
-      user.id === selectedUser.id ? { ...user, ...userFormData } : user
+      user.userId === selectedUser.userId ? { ...user, ...userFormData } : user
     );
     setUsers(updatedUsers);
     handleCloseModal();
   };
 
   const handleDeleteUser = () => {
-    const updatedUsers = users.filter((user) => user.id !== selectedUser.id);
+    const updatedUsers = users.filter((user) => user.userId !== selectedUser.userId);
     setUsers(updatedUsers);
     handleCloseModal();
   };
@@ -91,14 +113,14 @@ const AdminDashboard = () => {
   const handleSaveChallenge = (e) => {
     e.preventDefault();
     const updatedChallenges = challenges.map((challenge) =>
-      challenge.id === selectedChallenge.id ? { ...challenge, ...challengeFormData } : challenge
+      challenge.challengeId === selectedChallenge.challengeId ? { ...challenge, ...challengeFormData } : challenge
     );
     setChallenges(updatedChallenges);
     handleCloseModal();
   };
 
   const handleDeleteChallenge = () => {
-    const updatedChallenges = challenges.filter((challenge) => challenge.id !== selectedChallenge.id);
+    const updatedChallenges = challenges.filter((challenge) => challenge.challengeId !== selectedChallenge.challengeId);
     setChallenges(updatedChallenges);
     handleCloseModal();
   };
@@ -121,9 +143,9 @@ const AdminDashboard = () => {
             </TableHead>
             <TableBody>
               {users.map((user) => (
-                <TableRow key={user.id} className="table-row">
+                <TableRow key={user.userId} className="table-row">
                   <TableCell component="th" scope="row">
-                    {user.name}
+                    {user.username}
                   </TableCell>
                   <TableCell align="center">{user.email}</TableCell>
                   <TableCell align="right">
@@ -148,9 +170,9 @@ const AdminDashboard = () => {
             </TableHead>
             <TableBody>
               {challenges.map((challenge) => (
-                <TableRow key={challenge.id} className="table-row">
+                <TableRow key={challenge.challengeId} className="table-row">
                   <TableCell component="th" scope="row">
-                    {challenge.title}
+                    {challenge.name}
                   </TableCell>
                   <TableCell align="center">{challenge.description}</TableCell>
                   <TableCell align="right">
@@ -180,7 +202,7 @@ const AdminDashboard = () => {
         <Modal open={isDeleteUserModalOpen} onClose={handleCloseModal}>
           <Box className="modalContent">
             <Typography variant="h6">Delete User</Typography>
-            <Typography>Are you sure you want to delete {selectedUser?.name}?</Typography>
+            <Typography>Are you sure you want to delete {selectedUser?.username}?</Typography>
             <Box display="flex" justifyContent="flex-end" mt={2}>
               <Button onClick={handleDeleteUser} variant="contained" color="secondary">Delete</Button>
               <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>
@@ -205,7 +227,7 @@ const AdminDashboard = () => {
         <Modal open={isDeleteChallengeModalOpen} onClose={handleCloseModal}>
           <Box className="modalContent">
             <Typography variant="h6">Delete Challenge</Typography>
-            <Typography>Are you sure you want to delete {selectedChallenge?.title}?</Typography>
+            <Typography>Are you sure you want to delete {selectedChallenge?.name}?</Typography>
             <Box display="flex" justifyContent="flex-end" mt={2}>
               <Button onClick={handleDeleteChallenge} variant="contained" color="secondary">Delete</Button>
               <Button onClick={handleCloseModal} variant="contained" style={{ marginLeft: '10px' }}>Cancel</Button>

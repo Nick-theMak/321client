@@ -7,7 +7,7 @@ import StudentSignupScreen from './components/pages/StudentSignupScreen';
 import HostSignupScreen from './components/pages/HostSignup';
 import StudentDashboard from './components/pages/StudentDashboard';
 import HostDashboard from './components/pages/HostDashboard';
-import AccountManagement from './components/pages/AccountManagement';
+import StudentAccountManagement from './components/pages/StudentAccountManagement';
 import PastCompetitions from './components/pages/PastCompetitions';
 import CompetitionHomePage from './components/pages/CompetitionHomePage';
 import ChallengesList from './components/pages/ChallengesList';

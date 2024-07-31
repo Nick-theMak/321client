@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../networking/api";
+import { api, loadUserDetails } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
@@ -39,7 +39,18 @@ function StudentLoginScreen() {
         console.log("Login successful:", response.data);
         console.log(response.data.details.token);
         localStorage.setItem('token', response.data.details.token);
-        navigate('/dashboard'); // Redirect to the dashboard or any other page
+
+        const userDetails = await loadUserDetails(formData.username);
+        console.log("User details:", userDetails);
+        localStorage.setItem('user', JSON.stringify(userDetails));
+
+        if (userDetails.role === 'STUDENT') {
+          navigate('/student-dashboard'); // Redirect to the dashboard or any other page
+        } else if (userDetails.role === 'TEACHER') {
+          navigate('/host-dashboard');
+        } else if (userDetails.role === 'ADMIN') {
+          navigate('/admin-dashboard');
+        }
       } catch (error) {
         console.error("Login failed:", error);
       }
