@@ -1,6 +1,7 @@
 .enter-competition {
   background-color: #080705;
   height: 100vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;

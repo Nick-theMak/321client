@@ -117,9 +117,8 @@ export default function Rooms() {
 
   return (
     <><DrawerAppBar /><div className="wrapper">
-          <div className="app">
+          <div className="questionapp">
               <div className="headerWrapper">
-
                   <Main>
                       {status === "loading" && <Loader />}
                       {status === "error" && <Error />}
