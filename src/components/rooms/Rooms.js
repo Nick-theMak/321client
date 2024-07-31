@@ -13,6 +13,7 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 import "./rooms.css";
 
+
 const SECS_PER_QUESTION = 5;
 
 // We need to define the intialState in order to use useReduce Hook.
@@ -100,13 +101,14 @@ export default function Rooms() {
   );
 
   useEffect(function () {
-    fetch("api here")
+    fetch("https://raw.githubusercontent.com/Nick-theMak/321questions/main/questions.json")
       .then((res) => res.json())
       .then((data) =>
         dispatch({
           type: "dataReceived",
           payload: data["questions"],
-        })
+        }),
+        console.log("json object successfully loaded")
       )
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
