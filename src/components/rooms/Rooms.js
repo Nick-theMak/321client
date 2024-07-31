@@ -1,6 +1,8 @@
 import { useEffect, useReducer } from "react";
 
 
+import DrawerAppBar from "../elements/DrawerAppBar";
+
 import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
@@ -114,55 +116,50 @@ export default function Rooms() {
   }, []);
 
   return (
-    <div className="wrapper">
-      <div className="app">
-        <div className="headerWrapper">
+    <><DrawerAppBar /><div className="wrapper">
+          <div className="app">
+              <div className="headerWrapper">
 
-          <Main>
-            {status === "loading" && <Loader />}
-            {status === "error" && <Error />}
-            {status === "ready" && (
-              <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
-            )}{" "}
-            {status === "active" && (
-              <>
-                <Progress
-                  index={index}
-                  numQuestions={numQuestions}
-                  points={points}
-                  maxPossiblePoints={maxPossiblePoints}
-                  answer={answer}
-                />
-                <Question
-                  question={questions[index]}
-                  dispatch={dispatch}
-                  answer={answer}
-                />
-                <Footer>
-                  <Timer
-                    dispatch={dispatch}
-                    secondsRemaining={secondsRemaining}
-                  />
-                  <NextButton
-                    dispatch={dispatch}
-                    answer={answer}
-                    numQuestions={numQuestions}
-                    index={index}
-                  />
-                </Footer>
-              </>
-            )}
-            {status === "finished" && (
-              <FinishScreen
-                points={points}
-                maxPossiblePoints={maxPossiblePoints}
-                highscore={highscore}
-                dispatch={dispatch}
-              />
-            )}
-          </Main>
-        </div>
-      </div>
-    </div>
+                  <Main>
+                      {status === "loading" && <Loader />}
+                      {status === "error" && <Error />}
+                      {status === "ready" && (
+                          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+                      )}{" "}
+                      {status === "active" && (
+                          <>
+                              <Progress
+                                  index={index}
+                                  numQuestions={numQuestions}
+                                  points={points}
+                                  maxPossiblePoints={maxPossiblePoints}
+                                  answer={answer} />
+                              <Question
+                                  question={questions[index]}
+                                  dispatch={dispatch}
+                                  answer={answer} />
+                              <Footer>
+                                  <Timer
+                                      dispatch={dispatch}
+                                      secondsRemaining={secondsRemaining} />
+                                  <NextButton
+                                      dispatch={dispatch}
+                                      answer={answer}
+                                      numQuestions={numQuestions}
+                                      index={index} />
+                              </Footer>
+                          </>
+                      )}
+                      {status === "finished" && (
+                          <FinishScreen
+                              points={points}
+                              maxPossiblePoints={maxPossiblePoints}
+                              highscore={highscore}
+                              dispatch={dispatch} />
+                      )}
+                  </Main>
+              </div>
+          </div>
+      </div></>
   );
 }
