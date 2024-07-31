@@ -11,7 +11,7 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
-import "../index.css";
+import "./rooms.css";
 
 const SECS_PER_QUESTION = 5;
 
