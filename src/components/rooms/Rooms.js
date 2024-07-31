@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
 
-import Header from "./Header";
+
 import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
@@ -115,7 +115,6 @@ export default function Rooms() {
     <div className="wrapper">
       <div className="app">
         <div className="headerWrapper">
-          <Header />
 
           <Main>
             {status === "loading" && <Loader />}
