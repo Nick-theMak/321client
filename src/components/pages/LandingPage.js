@@ -25,7 +25,7 @@ const LandingPage = () => {
           <img src={require('../../assets/images/students.jpg')} alt="Student" />
           <div className="card-content">
             <h3>Student?</h3>
-            <p>Enter a competition</p>
+            <p>Get the code that your teacher has projected onto the board, join a team, then solve challenges to earn points.</p>
             <div className="buttons">
               <button className="sign-up-button" onClick={handleStudentSignup}>Sign Up</button>
               <button onClick={handleEnterCompetition}>Enter Competition</button>
@@ -36,7 +36,7 @@ const LandingPage = () => {
           <img src={require('../../assets/images/teacher.jpg')} alt="Teacher or Business" />
           <div className="card-content">
             <h3>Teacher or Business?</h3>
-            <p>Host a competition</p>
+            <p>Register as a host to launch competitions that participants can join, enable and disable modules, and review past results.</p>
             <div className="buttons">
               <button className="host-sign-up-button" onClick={handleHostSignup}>Sign Up</button>
             </div>

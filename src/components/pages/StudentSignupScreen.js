@@ -5,7 +5,7 @@ import { TextField, Checkbox, FormControlLabel, Typography } from '@mui/material
 import { api } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
-import './StudentLoginScreen.css';
+import './StudentSignupScreen.css';
 
 function StudentSignupScreen() {
   const navigate = useNavigate();
@@ -124,10 +124,10 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Enter your year level."
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox name="rememberMe" color="primary" />}
             label="Remember Me"
-          />
+          /> */}
           <md-filled-button type="submit">Create Account</md-filled-button>
           <md-outlined-button type="button" onClick={() => navigate('/login')}>Sign in</md-outlined-button>
         </form>
