@@ -29,8 +29,7 @@ function HostSignupScreen() {
     };
 
     // Handler for form submission
-    const handleSignup = async (e) => {
-        e.preventDefault();
+    const handleSignup = async () => {
         // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match");
@@ -126,7 +125,7 @@ function HostSignupScreen() {
                         helperText="Enter the school you are teaching in"
                     />
                     <Box className="form-actions">
-                    <Button variant="contained">Create Account</Button>
+                    <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
                     <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
                     </Box>
                 </form>

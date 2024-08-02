@@ -27,8 +27,7 @@ function StudentSignupScreen() {
   };
 
   // Handler for form submission
-  const handleSignup = async (e) => {
-    e.preventDefault(); // Prevent form from submitting the default way
+  const handleSignup = async () => {
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -137,7 +136,7 @@ function StudentSignupScreen() {
             label="Remember Me"
           /> */}
             <Box className="form-actions">
-          <Button variant="contained">Create Account</Button>
+          <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
           <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
             </Box>
         </form>

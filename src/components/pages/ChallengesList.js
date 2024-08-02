@@ -11,6 +11,7 @@ const ChallengesList = () => {
   const [challenges, setChallenges] = useState([]); // State to store challenges data
   const [searchTerm, setSearchTerm] = useState(''); // State to store search term
   const [difficultyFilter, setDifficultyFilter] = useState(''); // State to store difficulty filter
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   useEffect(() => {
     // Function to fetch challenges from the API
