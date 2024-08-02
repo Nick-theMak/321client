@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loadChallenges } from '../networking/api';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import './ChallengesList.css';
@@ -7,6 +8,7 @@ const ChallengesList = () => {
   const [challenges, setChallenges] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -43,6 +45,7 @@ const ChallengesList = () => {
 
   const handleStartChallenge = (challengeId) => {
     console.log(`Starting challenge with ID: ${challengeId}`);
+    navigate('/rooms');
     // Implement the logic to start the challenge here
   };
 

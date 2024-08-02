@@ -185,8 +185,8 @@ progress {
 }
 
 .btn-option.correct {
-  background-color: #c380c3; /* --color-theme */
-  border: 2px solid #c380c3; /* --color-theme */
+  background-color: #c380c3 !important; /* --color-theme */
+  border: 2px solid #c380c3 !important; /* --color-theme */
   color: #f1f3f5; /* --color-light */
 }
 
@@ -208,7 +208,7 @@ progress {
 }
 
 .result {
-  background-color: #c380c3; /* --color-theme */
+  background-color: #c380c3 !important; /* --color-theme */
   color: #f1f3f5; /* --color-light */
   border-radius: calc(2vmin + 7px);
   text-align: center;
