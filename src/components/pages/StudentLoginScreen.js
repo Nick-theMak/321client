@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, loadUserDetails } from "../networking/api";
+import { api, loadUserDetails } from "../networking/api"; // Import API methods
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
@@ -9,14 +9,14 @@ import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
 import { TextField, Button, Typography, Checkbox, FormControlLabel } from '@mui/material';
 
-
 function StudentLoginScreen() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook to navigate programmatically
     const [formData, setFormData] = useState({
       username: '',
       password: ''
-    });
+    }); // State to manage form data
   
+    // Handler for form input changes
     const handleChange = (e) => {
       setFormData({
         ...formData,
@@ -24,8 +24,9 @@ function StudentLoginScreen() {
       });
     };
   
+    // Handler for form submission
     const handleLogin = async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Prevent form from submitting the default way
   
       const loginData = {
         username: formData.username,
@@ -35,27 +36,27 @@ function StudentLoginScreen() {
       console.log(loginData);
   
       try {
-        const response = await api.post('/user/login', loginData);
+        const response = await api.post('/user/login', loginData); // API request to log in
         console.log("Login successful:", response.data);
         console.log(response.data.details.token);
-        localStorage.setItem('token', response.data.details.token);
+        localStorage.setItem('token', response.data.details.token); // Save token to local storage
 
-        const userDetails = await loadUserDetails(formData.username);
+        const userDetails = await loadUserDetails(formData.username); // Load user details
         console.log("User details:", userDetails);
-        localStorage.setItem('user', JSON.stringify(userDetails));
+        localStorage.setItem('user', JSON.stringify(userDetails)); // Save user details to local storage
 
+        // Redirect based on user role
         if (userDetails.role === 'STUDENT') {
-          navigate('/student-dashboard'); // Redirect to the dashboard or any other page
+          navigate('/student-dashboard'); // Redirect to student dashboard
         } else if (userDetails.role === 'TEACHER') {
-          navigate('/host-dashboard');
+          navigate('/host-dashboard'); // Redirect to host dashboard
         } else if (userDetails.role === 'ADMIN') {
-          navigate('/admin-dashboard');
+          navigate('/admin-dashboard'); // Redirect to admin dashboard
         }
       } catch (error) {
-        console.error("Login failed:", error);
+        console.error("Login failed:", error); // Log any errors during login
       }
     };
-
 
     return (
         <div className="login-container">
@@ -68,7 +69,7 @@ function StudentLoginScreen() {
                     <h5>Have a question? Get help.<md-icon>help</md-icon></h5>
                 </div>
                 <form onSubmit={handleLogin}>
-                <TextField
+                    <TextField
                         label="Username"
                         type="text"
                         name="username"
@@ -96,7 +97,7 @@ function StudentLoginScreen() {
                         <md-checkbox></md-checkbox>
                         <label>Remember Me</label>
                     </div>
-                    <md-filled-button onClick={handleLogin}>Sign in</md-filled-button>
+                    <md-filled-button type="submit">Sign in</md-filled-button>
                 </form>
                 <div className="account-links">
                     <a href="/student-signup">Create Student Account</a>

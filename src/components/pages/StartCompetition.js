@@ -14,11 +14,13 @@ const StartCompetition = () => {
     beginnerOsint: true,
   });
 
+  // Function to generate a random competition code
   const generateCode = () => {
     const newCode = Math.random().toString(36).substring(2, 10).toUpperCase();
     setCompetitionCode(newCode);
   };
 
+  // Function to toggle the modules
   const toggleModule = (module) => {
     setModules({ ...modules, [module]: !modules[module] });
   };

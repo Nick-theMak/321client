@@ -11,6 +11,7 @@ import AdminDashboard from './AdminDashboard';
 
 const StudentDashboard = () => {
   return (
+    // Extending Routes to include all the routes for the student dashboard
     <div>
       <DrawerAppBar />
       <Routes>

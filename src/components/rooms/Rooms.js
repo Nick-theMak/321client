@@ -1,8 +1,5 @@
 import { useEffect, useReducer } from "react";
-
-
 import DrawerAppBar from "../elements/DrawerAppBar";
-
 import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
@@ -15,14 +12,12 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 import "./rooms.css";
 
+const SECS_PER_QUESTION = 5; // Constant for the time per question
 
-const SECS_PER_QUESTION = 5;
-
-// We need to define the intialState in order to use useReduce Hook.
+// Initial state for the useReducer hook
 const initialState = {
   questions: [],
-  // 'loading', 'error', 'ready', 'active', 'finished'
-  status: "loading",
+  status: "loading", // Possible states: 'loading', 'error', 'ready', 'active', 'finished'
   index: 0,
   answer: null,
   points: 0,
@@ -30,6 +25,7 @@ const initialState = {
   secondsRemaining: null,
 };
 
+// Reducer function to manage state transitions based on action types
 function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
@@ -51,7 +47,6 @@ function reducer(state, action) {
       };
     case "newAnswer":
       const question = state.questions.at(state.index);
-
       return {
         ...state,
         answer: action.payload,
@@ -71,7 +66,6 @@ function reducer(state, action) {
       };
     case "restart":
       return { ...initialState, questions: state.questions, status: "ready" };
-
     case "tick":
       return {
         ...state,
@@ -84,9 +78,8 @@ function reducer(state, action) {
             : state.highscore,
         status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
-
     default:
-      throw new Error("Action unkonwn");
+      throw new Error("Action unknown");
   }
 }
 
@@ -102,7 +95,8 @@ export default function Rooms() {
     0
   );
 
-  useEffect(function () {
+  useEffect(() => {
+    // Fetch questions from a remote source
     fetch("https://raw.githubusercontent.com/Nick-theMak/321questions/main/questions.json")
       .then((res) => res.json())
       .then((data) =>
@@ -116,49 +110,57 @@ export default function Rooms() {
   }, []);
 
   return (
-    <><DrawerAppBar /><div className="wrapper">
-          <div className="questionapp">
-              <div className="headerWrapper">
-                  <Main>
-                      {status === "loading" && <Loader />}
-                      {status === "error" && <Error />}
-                      {status === "ready" && (
-                          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
-                      )}{" "}
-                      {status === "active" && (
-                          <>
-                              <Progress
-                                  index={index}
-                                  numQuestions={numQuestions}
-                                  points={points}
-                                  maxPossiblePoints={maxPossiblePoints}
-                                  answer={answer} />
-                              <Question
-                                  question={questions[index]}
-                                  dispatch={dispatch}
-                                  answer={answer} />
-                              <Footer>
-                                  <Timer
-                                      dispatch={dispatch}
-                                      secondsRemaining={secondsRemaining} />
-                                  <NextButton
-                                      dispatch={dispatch}
-                                      answer={answer}
-                                      numQuestions={numQuestions}
-                                      index={index} />
-                              </Footer>
-                          </>
-                      )}
-                      {status === "finished" && (
-                          <FinishScreen
-                              points={points}
-                              maxPossiblePoints={maxPossiblePoints}
-                              highscore={highscore}
-                              dispatch={dispatch} />
-                      )}
-                  </Main>
-              </div>
+    <>
+      <DrawerAppBar />
+      <div className="wrapper">
+        <div className="questionapp">
+          <div className="headerWrapper">
+            <Main>
+              {status === "loading" && <Loader />}
+              {status === "error" && <Error />}
+              {status === "ready" && (
+                <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+              )}
+              {status === "active" && (
+                <>
+                  <Progress
+                    index={index}
+                    numQuestions={numQuestions}
+                    points={points}
+                    maxPossiblePoints={maxPossiblePoints}
+                    answer={answer}
+                  />
+                  <Question
+                    question={questions[index]}
+                    dispatch={dispatch}
+                    answer={answer}
+                  />
+                  <Footer>
+                    <Timer
+                      dispatch={dispatch}
+                      secondsRemaining={secondsRemaining}
+                    />
+                    <NextButton
+                      dispatch={dispatch}
+                      answer={answer}
+                      numQuestions={numQuestions}
+                      index={index}
+                    />
+                  </Footer>
+                </>
+              )}
+              {status === "finished" && (
+                <FinishScreen
+                  points={points}
+                  maxPossiblePoints={maxPossiblePoints}
+                  highscore={highscore}
+                  dispatch={dispatch}
+                />
+              )}
+            </Main>
           </div>
-      </div></>
+        </div>
+      </div>
+    </>
   );
 }

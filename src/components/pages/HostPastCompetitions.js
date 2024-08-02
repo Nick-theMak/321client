@@ -3,22 +3,25 @@ import { Container, Table, TableBody, TableCell, TableContainer, TableHead, Tabl
 import './PastCompetition.css';
 
 function HostPastCompetitions() {
+  // State hook to manage players data
   const [players, setPlayers] = useState([
-    { name: 'Player 1', date:'10/10/10', score: 100 },
-    { name: 'Player 2', date:'10/10/10',score: 90 },
-    { name: 'Player 3', date:'10/10/10', score: 80 },
+    { name: 'Player 1', date: '10/10/10', score: 100 },
+    { name: 'Player 2', date: '10/10/10', score: 90 },
+    { name: 'Player 3', date: '10/10/10', score: 80 },
   ]);
 
   useEffect(() => {
+    // Function to update player scores at regular intervals
     const interval = setInterval(() => {
-      setPlayers((prevPlayers) => 
+      setPlayers((prevPlayers) =>
         prevPlayers.map(player => ({
           ...player,
-          score: player.score + Math.floor(Math.random() * 10)
+          score: player.score + Math.floor(Math.random() * 10) // Randomly increment the score
         }))
       );
-    }, 2000);
+    }, 2000); // Update every 2 seconds
     
+    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
@@ -27,7 +30,9 @@ function HostPastCompetitions() {
       <Typography variant="h5" className="header">
         Past Competitions
       </Typography>
-      <p>history of completing Capture The Future competitions</p>
+      <p>History of completing Capture The Future competitions</p>
+      
+      {/* Table container for displaying player data */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

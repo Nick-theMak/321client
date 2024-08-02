@@ -1,22 +1,23 @@
 // src/pages/StudentSignupScreen.jsx
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { TextField, Checkbox, FormControlLabel, Typography } from '@mui/material';
-import { api } from "../networking/api";
+import { TextField, Typography } from '@mui/material';
+import { api } from "../networking/api"; // Import API methods
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import './StudentSignupScreen.css';
 
 function StudentSignupScreen() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook to navigate programmatically
   const [formData, setFormData] = useState({
     email: '',
     username: '',
     password: '',
     confirmPassword: '',
     yearLevel: 1
-  });
+  }); // State to manage form data
 
+  // Handler for form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -25,13 +26,15 @@ function StudentSignupScreen() {
     });
   };
 
+  // Handler for form submission
   const handleSignup = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form from submitting the default way
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
+    // Prepare student data for API request
     const studentData = {
       email: formData.email,
       username: formData.username,
@@ -42,11 +45,11 @@ function StudentSignupScreen() {
     console.log(studentData);
 
     try {
-      const response = await api.post('/user/student', studentData);
+      const response = await api.post('/user/student', studentData); // API request to create a new student
       console.log("Signup successful:", response.data);
-      navigate('/login');
+      navigate('/login'); // Redirect to login on successful signup
     } catch (error) {
-      console.error("Signup failed:", error);
+      console.error("Signup failed:", error); // Log any errors during signup
       console.log(studentData);
     }
   };
@@ -64,6 +67,7 @@ function StudentSignupScreen() {
           </Typography>
         </div>
         <form onSubmit={handleSignup}>
+          {/* Email input field */}
           <TextField
             label="Email"
             type="email"
@@ -76,6 +80,7 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your email address."
           />
+          {/* Username input field */}
           <TextField
             label="Username"
             type="text"
@@ -88,6 +93,7 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your username."
           />
+          {/* Password input field */}
           <TextField
             label="Password"
             type="password"
@@ -100,6 +106,7 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your password."
           />
+          {/* Confirm password input field */}
           <TextField
             label="Confirm Password"
             type="password"
@@ -112,6 +119,7 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please confirm your password."
           />
+          {/* Year level input field */}
           <TextField
             label="Year Level"
             type="number"
@@ -124,10 +132,7 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Enter your year level."
           />
-          {/* <FormControlLabel
-            control={<Checkbox name="rememberMe" color="primary" />}
-            label="Remember Me"
-          /> */}
+          {/* Submit and Sign in buttons */}
           <md-filled-button type="submit">Create Account</md-filled-button>
           <md-outlined-button type="button" onClick={() => navigate('/login')}>Sign in</md-outlined-button>
         </form>
@@ -137,4 +142,3 @@ function StudentSignupScreen() {
 }
 
 export default StudentSignupScreen;
-

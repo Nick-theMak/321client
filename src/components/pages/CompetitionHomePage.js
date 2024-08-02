@@ -8,11 +8,12 @@ import '../../assets/images/exploit.png'
 import '../../assets/images/networking.png'
 import { Typography } from '@mui/material';
 
+// Hardcoded list of challenges with details
 const challenges = [
   {
     title: 'Cryptography',
     description: 'Try your hand at some encryption, decryption, and code-breaking. Every cipher holds a secret waiting to be unveiled, are you ready?',
-    imgSrc: require('../../assets/images/cryptography.jpg')
+    imgSrc: require('../../assets/images/cryptography.jpg') 
   },
   {
     title: 'Open Source Intelligence (OSINT)',
@@ -22,7 +23,7 @@ const challenges = [
   {
     title: 'Web Exploitation',
     description: 'Welcome to the frontier of cyber adventure, where the web becomes your playground and exploitation is the name of the game! Uncover vulnerabilities in our challenges and prove yourself!',
-    imgSrc: require('../../assets/images/exploit.png')
+    imgSrc: require('../../assets/images/exploit.png') 
   },
   {
     title: 'Networking',
@@ -32,17 +33,18 @@ const challenges = [
 ];
 
 const CompetitionHomePage = () => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(''); // State to store user details
   const navigate = useNavigate();
 
   useEffect(() => {
+    // load user details from local storage
     const loadUser = async () => {
-      const userDetails = JSON.parse(localStorage.getItem('user'));
+      const userDetails = JSON.parse(localStorage.getItem('user')); 
       if (userDetails) {
-        setUser(userDetails);
+        setUser(userDetails); 
         console.log(user);
       } else {
-        navigate('/login');
+        navigate('/login'); // Redirect to login if user details are not found
       }
     }
 
@@ -64,8 +66,7 @@ const CompetitionHomePage = () => {
           <p>2/10</p>
         </div>
       </div>
-      {/* <h2>Start a Challenge</h2>
-      <button className="view-all-challenges-button">View All Challenges</button> */}
+      {/* Challenge cards carousel */}
       <div className="challenges-carousel">
         {challenges.map((challenge, index) => (
           <ChallengeCard

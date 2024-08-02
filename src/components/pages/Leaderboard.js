@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import './Leaderboard.css';
 
-function App() {
+function Leaderboard() {
+  // State hook to manage players data
   const [players, setPlayers] = useState([
     { name: 'Player 1', score: 100 },
     { name: 'Player 2', score: 90 },
@@ -10,15 +11,17 @@ function App() {
   ]);
 
   useEffect(() => {
+    // Function to update player scores at regular intervals
     const interval = setInterval(() => {
       setPlayers((prevPlayers) => 
         prevPlayers.map(player => ({
           ...player,
-          score: player.score + Math.floor(Math.random() * 10)
+          score: player.score + Math.floor(Math.random() * 10) // Randomly increment the score
         }))
       );
-    }, 2000);
+    }, 2000); // Update every 2 seconds
     
+    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
@@ -28,6 +31,8 @@ function App() {
         Leaderboard
       </Typography>
       <p>View your team's rank</p>
+      
+      {/* Table container for displaying player data */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -52,4 +57,4 @@ function App() {
   );
 }
 
-export default App;
+export default Leaderboard;

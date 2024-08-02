@@ -10,15 +10,16 @@ import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
 
 function HostSignupScreen() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook to navigate programmatically
     const [formData, setFormData] = useState({
         email: '',
         username: '',
         password: '',
         confirmPassword: '',
         school: ''
-    });
+    }); // State to manage form data
 
+    // Handler for form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -27,13 +28,16 @@ function HostSignupScreen() {
         });
     };
 
+    // Handler for form submission
     const handleSignup = async (e) => {
         e.preventDefault();
+        // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match");
             return;
         }
 
+        // Prepare teacher data for API request
         const teacherData = {
             email: formData.email,
             username: formData.username,
@@ -42,11 +46,11 @@ function HostSignupScreen() {
         };
 
         try {
-            const response = await api.post('/user/teacher', teacherData);
+            const response = await api.post('/user/teacher', teacherData); // API request to create a new teacher
             console.log("Signup successful:", response.data);
-            navigate('/login');
+            navigate('/login'); // Redirect to login on successful signup
         } catch (error) {
-            console.error("Signup failed:", error);
+            console.error("Signup failed:", error); // Log any errors during signup
         }
     };
 

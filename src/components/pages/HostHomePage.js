@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import './HostDashboard.css';
-import { useNavigate } from 'react-router-dom';
-
+import './HostDashboard.css'; 
+import { useNavigate } from 'react-router-dom'; 
 
 const HostHomePage = () => {
+  // State hook to manage user details
   const [user, setUser] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadUser = async () => {
-      const userDetails = JSON.parse(localStorage.getItem('user'));
+      const userDetails = JSON.parse(localStorage.getItem('user')); // load user details from local storage
       if (userDetails) {
-        setUser(userDetails);
+        setUser(userDetails); 
         console.log(user);
       } else {
-        navigate('/login');
+        navigate('/login'); // Redirect to login if user details are not found
       }
     }
 
@@ -22,7 +22,7 @@ const HostHomePage = () => {
   }, [navigate]);
 
   return (
-    <div>      
+    <div>
       <div className="host-dashboard">
         <div className="welcome-section">
           <h1>Welcome {user.username}!</h1>

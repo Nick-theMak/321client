@@ -1,51 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { loadChallenges } from '../networking/api';
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import {
+  Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel
+} from '@mui/material';
 import './ChallengesList.css';
 
 const ChallengesList = () => {
-  const [challenges, setChallenges] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [difficultyFilter, setDifficultyFilter] = useState('');
+  // State hooks to manage challenges data, search term, and difficulty filter
+  const [challenges, setChallenges] = useState([]); // State to store challenges data
+  const [searchTerm, setSearchTerm] = useState(''); // State to store search term
+  const [difficultyFilter, setDifficultyFilter] = useState(''); // State to store difficulty filter
 
   useEffect(() => {
+    // Function to fetch challenges from the API
     const fetchChallenges = async () => {
       try {
         const challenges = await loadChallenges();
-        setChallenges(challenges);
+        setChallenges(challenges); // Set the challenges state with fetched data
       } catch (err) {
         console.error('Failed to fetch challenges', err);
       }
     };
 
-    // loadChallenges();
+    // Uncomment this section for testing purposes with mock data
+    // useEffect(() => {
+    //   const mockChallenges = [
+    //     { id: 1, title: 'Challenge 1', description: 'Description for challenge 1', difficulty: 'Easy' },
+    //     { id: 2, title: 'Challenge 2', description: 'Description for challenge 2', difficulty: 'Medium' },
+    //     { id: 3, title: 'Challenge 3', description: 'Description for challenge 3', difficulty: 'Hard' },
+    //   ];
+    //   setChallenges(mockChallenges);
+    // }, []);
 
-    fetchChallenges();
+    fetchChallenges(); // Fetch challenges when the component mounts
   }, []);
 
-  // useEffect(() => {
-    // Mock data for challenges
-    // const mockChallenges = [
-    //   { id: 1, title: 'Challenge 1', description: 'Description for challenge 1', difficulty: 'Easy' },
-    //   { id: 2, title: 'Challenge 2', description: 'Description for challenge 2', difficulty: 'Medium' },
-    //   { id: 3, title: 'Challenge 3', description: 'Description for challenge 3', difficulty: 'Hard' },
-    // ];
-    // setChallenges(mockChallenges);
-  // }, []);
-
+  // Handler for search input change
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value); // Update the search term state
   };
 
+  // Handler for difficulty filter change
   const handleDifficultyChange = (e) => {
-    setDifficultyFilter(e.target.value);
+    setDifficultyFilter(e.target.value); // Update the difficulty filter state
   };
 
+  // Handler for starting a challenge
   const handleStartChallenge = (challengeId) => {
     console.log(`Starting challenge with ID: ${challengeId}`);
     // Implement the logic to start the challenge here
   };
 
+  // Filter challenges based on search term and difficulty filter
   const filteredChallenges = challenges.filter((challenge) => {
     return (
       challenge.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
