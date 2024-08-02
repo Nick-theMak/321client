@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
+import { Typography, TextField, Button, Box } from '@mui/material';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -27,8 +28,8 @@ const LandingPage = () => {
             <h3>Student?</h3>
             <p>Get the code that your teacher has projected onto the board, join a team, then solve challenges to earn points.</p>
             <div className="buttons">
-              <button className="sign-up-button" onClick={handleStudentSignup}>Sign Up</button>
-              <button onClick={handleEnterCompetition}>Enter Competition</button>
+              <Button variant="contained" color="primary" onClick={handleStudentSignup}>Sign Up</Button>
+              <Button variant="contained" color="secondary" onClick={handleEnterCompetition}>Enter Competition</Button>
             </div>
           </div>
         </div>
@@ -38,7 +39,7 @@ const LandingPage = () => {
             <h3>Teacher or Business?</h3>
             <p>Register as a host to launch competitions that participants can join, enable and disable modules, and review past results.</p>
             <div className="buttons">
-              <button className="host-sign-up-button" onClick={handleHostSignup}>Sign Up</button>
+              <Button variant="contained" color="primary" onClick={handleHostSignup}>Sign Up</Button>
             </div>
           </div>
         </div>

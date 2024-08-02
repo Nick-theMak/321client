@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { TextField } from '@mui/material';
+import { TextField, Box, Button } from '@mui/material';
 import { api } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
@@ -121,8 +121,10 @@ function HostSignupScreen() {
                         margin="normal"
                         helperText="Enter the school you are teaching in"
                     />
-                    <md-filled-button type="submit">Create Account</md-filled-button>
-                    <md-outlined-button type="button" onClick={() => navigate('/login')}>Sign in</md-outlined-button>
+                    <Box className="form-actions">
+                    <Button variant="contained">Create Account</Button>
+                    <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
+                    </Box>
                 </form>
             </div>
         </div>
