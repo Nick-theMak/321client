@@ -97,7 +97,7 @@ function StudentLoginScreen() {
                         <md-checkbox></md-checkbox>
                         <label>Remember Me</label>
                     </div>
-                    <md-filled-button type="submit">Sign in</md-filled-button>
+                    <Button fullWidth variant="contained" color="primary" onClick={handleLogin}>Sign in</Button>
                 </form>
                 <div className="account-links">
                     <a href="/student-signup">Create Student Account</a>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loadChallenges } from '../networking/api';
 import {
   Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel
@@ -48,6 +49,7 @@ const ChallengesList = () => {
   // Handler for starting a challenge
   const handleStartChallenge = (challengeId) => {
     console.log(`Starting challenge with ID: ${challengeId}`);
+    navigate('/rooms');
     // Implement the logic to start the challenge here
   };
 

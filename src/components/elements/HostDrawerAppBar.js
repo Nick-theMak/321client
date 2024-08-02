@@ -38,7 +38,7 @@ const HostDrawerAppBar = () => {
             Capture the Future
             </Typography> */}
           </div>
-          <Button color="inherit" onClick={() => navigate('/competition-list')}>Competition</Button>
+          <Button color="inherit" onClick={() => handleNavigation('/host-dashboard/start-competition')}>Competition</Button>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} classes={{ paper: 'drawerPaper' }} >

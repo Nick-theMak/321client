@@ -7,7 +7,7 @@ function Options({ question, dispatch, answer }) {
           <button
             className={`btn btn-option ${index === answer ? "answer" : ""} ${
               hasAnswered
-                ? index === question.correctOption
+                ? index === question.answer
                   ? "correct"
                   : "wrong"
                 : ""

@@ -1,4 +1,7 @@
-import { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { loadQuestions, updateStudentScore } from "../networking/api";
 import DrawerAppBar from "../elements/DrawerAppBar";
 import Main from "./Main";
 import Loader from "./Loader";
@@ -46,14 +49,21 @@ function reducer(state, action) {
         secondsRemaining: state.questions.length * SECS_PER_QUESTION,
       };
     case "newAnswer":
-      const question = state.questions.at(state.index);
+      const question = state.questions[state.index];
+      const newPoints =
+        action.payload === question.correctOption
+          ? state.points + question.points
+          : state.points;
+
+      // Only update the score if it's different
+      // if (newPoints !== state.points) {
+      //   updateStudentScore(newPoints); // Update score in the backend
+      // }
+
       return {
         ...state,
         answer: action.payload,
-        points:
-          action.payload === question.correctOption
-            ? state.points + question.points
-            : state.points,
+        points: newPoints,
       };
     case "nextQuestion":
       return { ...state, index: state.index + 1, answer: null };
@@ -78,6 +88,11 @@ function reducer(state, action) {
             : state.highscore,
         status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
+    case "scoreUpdate":
+      return {
+        ...state,
+        points: action.payload.newScore,
+      };
     default:
       throw new Error("Action unknown");
   }
@@ -96,17 +111,45 @@ export default function Rooms() {
   );
 
   useEffect(() => {
-    // Fetch questions from a remote source
-    fetch("https://raw.githubusercontent.com/Nick-theMak/321questions/main/questions.json")
-      .then((res) => res.json())
-      .then((data) =>
+    const fetchData = async () => {
+      try {
+        const data = await loadQuestions(1);
+        console.log(data);
         dispatch({
           type: "dataReceived",
-          payload: data["questions"],
-        }),
-        console.log("json object successfully loaded")
-      )
-      .catch((err) => dispatch({ type: "dataFailed" }));
+          payload: data,
+        });
+      } catch (err) {
+        dispatch({ type: "dataFailed" });
+      }
+    };
+
+    fetchData();
+
+    const socket = new SockJS("http://192.168.1.50:8085/ws");
+    const client = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => {
+        console.log(str);
+      },
+      onConnect: () => {
+        console.log("Connected");
+        client.subscribe("/topic/scores", (message) => {
+          const scoreUpdate = JSON.parse(message.body);
+          dispatch({ type: "scoreUpdate", payload: scoreUpdate });
+        });
+      },
+      onStompError: (frame) => {
+        console.error("Broker reported error: " + frame.headers["message"]);
+        console.error("Additional details: " + frame.body);
+      },
+    });
+
+    client.activate();
+
+    return () => {
+      client.deactivate();
+    };
   }, []);
 
   return (
@@ -136,10 +179,7 @@ export default function Rooms() {
                     answer={answer}
                   />
                   <Footer>
-                    <Timer
-                      dispatch={dispatch}
-                      secondsRemaining={secondsRemaining}
-                    />
+                    <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
                     <NextButton
                       dispatch={dispatch}
                       answer={answer}
@@ -164,3 +204,4 @@ export default function Rooms() {
     </>
   );
 }
+

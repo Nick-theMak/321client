@@ -1,8 +1,8 @@
 // src/pages/StudentSignupScreen.jsx
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { TextField, Typography } from '@mui/material';
-import { api } from "../networking/api"; // Import API methods
+import { TextField, Checkbox, FormControlLabel, Typography, Button, Box } from '@mui/material';
+import { api } from "../networking/api";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import './StudentSignupScreen.css';
@@ -132,9 +132,14 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Enter your year level."
           />
-          {/* Submit and Sign in buttons */}
-          <md-filled-button type="submit">Create Account</md-filled-button>
-          <md-outlined-button type="button" onClick={() => navigate('/login')}>Sign in</md-outlined-button>
+          {/* <FormControlLabel
+            control={<Checkbox name="rememberMe" color="primary" />}
+            label="Remember Me"
+          /> */}
+            <Box className="form-actions">
+          <Button variant="contained">Create Account</Button>
+          <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
+            </Box>
         </form>
       </div>
     </div>

@@ -33,6 +33,16 @@ export const loadChallenges = async () => {
     }
 }
 
+export const loadQuestions = async (challengeId) => {
+    try {
+        const response = await api.get(`/question/${challengeId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to load questions", error);
+        throw error;
+    }
+}
+
 // Function to load all users
 export const getAllUsers = async () => {
     try {
@@ -41,6 +51,23 @@ export const getAllUsers = async () => {
     } catch (error) {
         console.error("Failed to load users", error);
         throw error;
+    }
+}
+
+export const updateStudentScore = async (score) => {
+    console.log("Localstorage item:", localStorage.getItem('user'));
+    const userJSON = JSON.parse(localStorage.getItem('user'));
+    console.log("User JSON username:", userJSON.username);
+    try {
+        const response = await api.patch("/student/score", null, {
+            params: {
+                username: userJSON.username,
+                score: score
+            }
+        });
+        console.log("Score updated:", response.data);
+    } catch (error) {
+        console.error("Failed to update student score", error.response.data);
     }
 }
 

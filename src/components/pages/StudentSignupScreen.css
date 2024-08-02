@@ -7,9 +7,9 @@
     background-color: #f5f5f5;
   }
 
-  /* .login-header {
-    margin-bottom: 20px;
-  } */
+   .login-header {
+    margin-top: 100px;
+  }
   
   .logo {
     width: 200px;
@@ -51,11 +51,19 @@
     background-color: #f5f5f5;
   }
   
+  .form-actions {
+    display: flex;
+    margin-top:20px;
+    gap: 10px;
+    margin-bottom:30px;
+  }
+
+  
   md-filled-button {
     position: relative;
     left: 550px;
     bottom: 0px;
-    /* padding: 10px; */
+    padding: 10px;
     /* background-color: #000;
     color: #fff; */
     /* border: none;
@@ -69,4 +77,23 @@
     --md-filled-button-label-text-color: #fff;
 
     /* cursor: pointer; */
+}
+md-outlined-button {
+  position: relative;
+  left: 550px;
+  bottom: 0px;
+  padding: 10px;
+  /* background-color: #000;
+  color: #fff; */
+  /* border: none;
+  border-radius: 4px;
+  font-size: 16px; */
+  /* align-items: center; */
+  /* margin-left: 100px; */
+  /* margin-top: 25px; */
+  /* margin-bottom: 25px; */
+  --md-filled-button-container-color: #000;
+  --md-filled-button-label-text-color: #fff;
+
+  /* cursor: pointer; */
 }
