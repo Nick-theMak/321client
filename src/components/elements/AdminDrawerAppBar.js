@@ -34,11 +34,8 @@ const AdminDrawerAppBar = () => {
           </IconButton>
           <div className='logoContainer'>
             <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
-            {/* <Typography  variant="h6" style={{ flexGrow: 1 }} className='navBarHeader'>
-            Capture the Future
-            </Typography> */}
           </div>
-          <Button color="inherit" onClick={() => navigate('/competition-list')}>Competition</Button>
+          {/* <Button color="inherit" onClick={() => navigate('/competition-list')}>Competition</Button> */}
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} classes={{ paper: 'drawerPaper' }} >

@@ -21,6 +21,10 @@ const LandingPage = () => {
     navigate('/host-signup');
   }
 
+  const handleLogin = () => {
+    navigate('/login');
+  }
+
   return (
     <div className="landing-page">
       <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
@@ -43,6 +47,16 @@ const LandingPage = () => {
             <p>Register as a host to launch competitions that participants can join, enable and disable modules, and review past results.</p>
             <div className="buttons">
               <Button variant="contained" color="primary" onClick={handleHostSignup}>Sign Up</Button>
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <img src={require('../../assets/images/Login.webp')} alt="Existing Account" />
+          <div className="card-content">
+            <h3>Already have an account?</h3>
+            <p>Login to your account to get started.</p>
+            <div className="buttons">
+              <Button variant="contained" color="primary" onClick={handleLogin}>Log In</Button>
             </div>
           </div>
         </div>
