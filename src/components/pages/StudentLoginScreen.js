@@ -27,6 +27,10 @@ function StudentLoginScreen() {
     // Handler for form submission
     const handleLogin = async (e) => {
       e.preventDefault(); // Prevent form from submitting the default way
+      if (formData.username === '' || formData.password === '') {
+        alert("Please fill in the fields")
+        return;
+      }
   
       const loginData = {
         username: formData.username,

@@ -30,7 +30,20 @@ function HostSignupScreen() {
 
     // Handler for form submission
     const handleSignup = async () => {
-        // Check if passwords match
+        if (formData.email === ''
+            || formData.username === ''
+            || formData.password === ''
+            || formData.confirmPassword === ''
+            || formData.school === '') {
+            alert("Please fill in all of the fields.");
+            return;
+        }
+
+        if (formData.password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match");
             return;
@@ -47,6 +60,7 @@ function HostSignupScreen() {
         try {
             const response = await api.post('/user/teacher', teacherData); // API request to create a new teacher
             console.log("Signup successful:", response.data);
+            alert("Account created successfully.");
             navigate('/login'); // Redirect to login on successful signup
         } catch (error) {
             console.error("Signup failed:", error); // Log any errors during signup
@@ -125,8 +139,8 @@ function HostSignupScreen() {
                         helperText="Enter the school you are teaching in"
                     />
                     <Box className="form-actions">
-                    <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
-                    <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
+                        <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
                     </Box>
                 </form>
             </div>

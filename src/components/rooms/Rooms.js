@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { loadQuestions, updateStudentScore } from "../networking/api";
+import { loadQuestions, updateStudentScore, socketUrl } from "../networking/api";
 import DrawerAppBar from "../elements/DrawerAppBar";
 import Main from "./Main";
 import Loader from "./Loader";
@@ -126,7 +126,7 @@ export default function Rooms() {
 
     fetchData();
 
-    const socket = new SockJS("http://192.168.1.50:8085/ws");
+    const socket = new SockJS(socketUrl);
     const client = new Client({
       webSocketFactory: () => socket,
       debug: (str) => {

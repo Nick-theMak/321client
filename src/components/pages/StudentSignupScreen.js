@@ -28,6 +28,19 @@ function StudentSignupScreen() {
 
   // Handler for form submission
   const handleSignup = async () => {
+    if (formData.email === ''
+      || formData.username === ''
+      || formData.password === ''
+      || formData.confirmPassword === '') {
+      alert("Please fill in all of the fields.");
+      return;
+    }
+
+    if (formData.password.length < 8 ) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -45,6 +58,7 @@ function StudentSignupScreen() {
 
     try {
       const response = await api.post('/user/student', studentData); // API request to create a new student
+      alert("Account created successfully.");
       console.log("Signup successful:", response.data);
       navigate('/login'); // Redirect to login on successful signup
     } catch (error) {

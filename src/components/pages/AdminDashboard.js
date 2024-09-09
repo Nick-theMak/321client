@@ -4,6 +4,7 @@ import {
   Container, Table, TableBody, TableCell, TableContainer,
   TableHead, TableRow, Paper, Typography, Button, Modal, Box, TextField
 } from '@mui/material';
+import AdminDrawerAppBar from '../elements/AdminDrawerAppBar';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -144,9 +145,7 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <header className="login-header">
-        <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
-      </header>
+    <AdminDrawerAppBar/>
       <Container maxWidth="md">
         <h1>Admin Dashboard</h1>
 

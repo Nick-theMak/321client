@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { isTokenExpired } from '../networking/api';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import { Typography, TextField, Button, Box } from '@mui/material';
 
 const LandingPage = () => {
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+
+      if (isTokenExpired(token)) {
+        localStorage.removeItem('token');
+        console.log("Token has expired. Removed from storage.");
+      } else {
+        console.log("Token is still valid.");
+      }
+    } else {
+      console.log("Nonexistent token.");
+    }
+
+  }, []);
 
   //navigation handlers
   const navigate = useNavigate();
@@ -19,6 +36,10 @@ const LandingPage = () => {
 
   const handleHostSignup = () => {
     navigate('/host-signup');
+  }
+
+  const handleLogin = () => {
+    navigate('/login');
   }
 
   return (
@@ -43,6 +64,16 @@ const LandingPage = () => {
             <p>Register as a host to launch competitions that participants can join, enable and disable modules, and review past results.</p>
             <div className="buttons">
               <Button variant="contained" color="primary" onClick={handleHostSignup}>Sign Up</Button>
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <img src={require('../../assets/images/Login.webp')} alt="Existing Account" />
+          <div className="card-content">
+            <h3>Already have an account?</h3>
+            <p>Login to your account to get started.</p>
+            <div className="buttons">
+              <Button variant="contained" color="primary" onClick={handleLogin}>Log In</Button>
             </div>
           </div>
         </div>
