@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Typography, Button, Box } from '@mui/material';
 import { api, loadUserDetails } from "../networking/api";
+import { useAlert } from "../elements/hooks/useAlert";
+import AlertPopup from "../elements/AlertPopup";
 import './HostAccountManagement.css';
 
 function HostAccountManagement() {
     const navigate = useNavigate();
-    
+    const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -31,8 +33,22 @@ function HostAccountManagement() {
         console.log(previousUserDetails);
         console.log("Username: ", parsedUserDetails.username);
 
+        if (formData.email === ''
+            || formData.username === ''
+            || formData.password === ''
+            || formData.confirmPassword === ''
+            || formData.school === '') {
+            showAlert("Please fill in all of the fields.");
+            return;
+        }
+
+        if (formData.password.length < 8) {
+            showAlert("Password must be at least 8 characters long.");
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
+            showAlert("Passwords do not match");
             return;
         }
 
@@ -51,13 +67,13 @@ function HostAccountManagement() {
                     username: parsedUserDetails.username
                 }
             });
-            alert("Update successful");
+            showAlert("Update successful");
             console.log("Update successful:", response.data);
 
             const userDetails = await loadUserDetails(formData.username);
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            localStorage.setItem('user', JSON.stringify(userDetails)); 
+            localStorage.setItem('user', JSON.stringify(userDetails));
             localStorage.setItem('token', response.data)
             console.log(localStorage.getItem('user'));
         } catch (error) {
@@ -139,6 +155,12 @@ function HostAccountManagement() {
                     </Box>
                 </form>
             </Box>
+            <AlertPopup
+                open={alertOpen}
+                title="Host Account Update"
+                description={alertMessage}
+                onClose={closeAlert}  // Close handler from the custom hook
+            />
         </Box>
     );
 }

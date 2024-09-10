@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Typography, Button, Box } from '@mui/material';
 import { api, loadUserDetails } from "../networking/api";
+import { useAlert } from "../elements/hooks/useAlert";
+import AlertPopup from "../elements/AlertPopup";
 import './StudentAccountManagement.css';
 
 function StudentAccountManagement() {
     const navigate = useNavigate();
-    
+    const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -31,8 +33,21 @@ function StudentAccountManagement() {
         console.log(previousUserDetails);
         console.log("Username: ", parsedUserDetails.username);
 
+        if (formData.email === ''
+            || formData.username === ''
+            || formData.password === ''
+            || formData.confirmPassword === '') {
+            showAlert("Please fill in all of the fields.");
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
+            showAlert("Passwords do not match");
+            return;
+        }
+
+        if (formData.yearLevel < 1 || formData.yearLevel > 12) {
+            showAlert("Enter a year level between 1 and 12.");
             return;
         }
 
@@ -51,13 +66,13 @@ function StudentAccountManagement() {
                     username: parsedUserDetails.username
                 }
             });
-            alert("Update successful");
+            showAlert("Update successful");
             console.log("Update successful:", response.data);
 
             const userDetails = await loadUserDetails(formData.username);
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            localStorage.setItem('user', JSON.stringify(userDetails)); 
+            localStorage.setItem('user', JSON.stringify(userDetails));
             localStorage.setItem('token', response.data)
             console.log(localStorage.getItem('user'));
         } catch (error) {
@@ -139,6 +154,12 @@ function StudentAccountManagement() {
                     </Box>
                 </form>
             </Box>
+            <AlertPopup
+                open={alertOpen}
+                title="Account Update"
+                description={alertMessage}
+                onClose={closeAlert}  // Close handler from the custom hook
+            />
         </Box>
     );
 }

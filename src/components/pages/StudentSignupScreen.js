@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Checkbox, FormControlLabel, Typography, Button, Box } from '@mui/material';
 import { api } from "../networking/api";
+import { useAlert } from "../elements/hooks/useAlert";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import './StudentSignupScreen.css';
+import AlertPopup from "../elements/AlertPopup";
 
 function StudentSignupScreen() {
   const navigate = useNavigate(); // Hook to navigate programmatically
+  const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -32,17 +35,25 @@ function StudentSignupScreen() {
       || formData.username === ''
       || formData.password === ''
       || formData.confirmPassword === '') {
-      alert("Please fill in all of the fields.");
+        showAlert("Please fill in all of the fields.");
+      // alert("Please fill in all of the fields.");
+      return;
+    }
+
+    if (formData.yearLevel < 1 || formData.yearLevel > 12) {
+      showAlert("Enter a year level between 1 and 12.");
       return;
     }
 
     if (formData.password.length < 8 ) {
-      alert("Password must be at least 8 characters long.");
+      showAlert("Password must be at least 8 characters long.");
+      // alert("Password must be at least 8 characters long.");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      showAlert("Passwords do not match.")
+      // alert("Passwords do not match.");
       return;
     }
 
@@ -58,10 +69,10 @@ function StudentSignupScreen() {
 
     try {
       const response = await api.post('/user/student', studentData); // API request to create a new student
-      alert("Account created successfully.");
+      showAlert("Account created successfully.", () => navigate('/login'));
       console.log("Signup successful:", response.data);
-      navigate('/login'); // Redirect to login on successful signup
     } catch (error) {
+      showAlert("Signup failed.");
       console.error("Signup failed:", error); // Log any errors during signup
       console.log(studentData);
     }
@@ -155,6 +166,12 @@ function StudentSignupScreen() {
             </Box>
         </form>
       </div>
+      <AlertPopup
+      open={alertOpen}
+      title="Sign up error"
+      description={alertMessage}
+      onClose={closeAlert}
+      />
     </div>
   );
 }
