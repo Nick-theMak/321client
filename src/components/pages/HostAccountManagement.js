@@ -77,7 +77,7 @@ function HostAccountManagement() {
             localStorage.setItem('token', response.data)
             console.log(localStorage.getItem('user'));
         } catch (error) {
-            // console.log(localStorage.getItem('user'));
+            showAlert("Update failed.");
             console.error("Update failed:", error);
         }
     };
@@ -143,15 +143,14 @@ function HostAccountManagement() {
                         name="school"
                         value={formData.school}
                         onChange={handleChange}
-                        placeholder="e.g. 8"
+                        placeholder="e.g. Cybersecurity High School"
                         variant="outlined"
                         fullWidth
                         margin="normal"
-                        helperText="Enter your school."
+                        helperText="Enter the school you are teaching in."
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
                         <Button variant="contained" onClick={handleUpdate}>Save Your Details</Button>
-                        {/* <Button variant="outlined" color="secondary" onClick={() => navigate('/dashboard/past-competitions')}>View Competition History</Button> */}
                     </Box>
                 </form>
             </Box>

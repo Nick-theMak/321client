@@ -7,7 +7,6 @@ import AlertPopup from "../elements/AlertPopup";
 import './StudentAccountManagement.css';
 
 function StudentAccountManagement() {
-    const navigate = useNavigate();
     const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
     const [formData, setFormData] = useState({
         email: '',
@@ -76,7 +75,7 @@ function StudentAccountManagement() {
             localStorage.setItem('token', response.data)
             console.log(localStorage.getItem('user'));
         } catch (error) {
-            // console.log(localStorage.getItem('user'));
+            showAlert("Update failed.");
             console.error("Update failed:", error);
         }
 
@@ -151,13 +150,12 @@ function StudentAccountManagement() {
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
                         <Button variant="contained" onClick={handleUpdate}>Save Your Details</Button>
-                        {/* <Button variant="outlined" color="secondary" onClick={() => navigate('/dashboard/past-competitions')}>View Competition History</Button> */}
                     </Box>
                 </form>
             </Box>
             <AlertPopup
                 open={alertOpen}
-                title="Account Update"
+                title="Student Account Update"
                 description={alertMessage}
                 onClose={closeAlert}  // Close handler from the custom hook
             />

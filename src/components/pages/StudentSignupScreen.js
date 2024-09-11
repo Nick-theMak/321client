@@ -156,10 +156,6 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Enter your year level."
           />
-          {/* <FormControlLabel
-            control={<Checkbox name="rememberMe" color="primary" />}
-            label="Remember Me"
-          /> */}
             <Box className="form-actions">
           <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
           <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
@@ -168,7 +164,7 @@ function StudentSignupScreen() {
       </div>
       <AlertPopup
       open={alertOpen}
-      title="Sign up error"
+      title="Student Sign Up"
       description={alertMessage}
       onClose={closeAlert}
       />

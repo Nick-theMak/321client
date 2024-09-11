@@ -139,7 +139,7 @@ function HostSignupScreen() {
                         variant="outlined"
                         fullWidth
                         margin="normal"
-                        helperText="Enter the school you are teaching in"
+                        helperText="Enter the school you are teaching in."
                     />
                     <Box className="form-actions">
                         <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
