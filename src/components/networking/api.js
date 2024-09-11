@@ -1,6 +1,20 @@
 import axiosInstance from "./axiosInstance";
 import { url } from "./url";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+
+export const isTokenExpired = (token) => {
+    try {
+        const decodedToken = jwtDecode(token);
+
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        return decodedToken.exp < currentTime;
+    } catch (error) {
+        console.log("Error decoding token: ", error);
+        return true;
+    }
+}
 
 // Create an Axios instance with base URL and headers
 export const api = axios.create({
@@ -9,6 +23,13 @@ export const api = axios.create({
         "Content-Type": "application/json"
     }
 });
+
+export const apiNoToken = axios.create({
+    baseURL: url,
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
 
 export const socketUrl = "http://localhost:8085/ws";
 
@@ -101,7 +122,7 @@ export const logout = async () => {
 // Function to load user details by username
 export const loadUserDetails = async (username) => {
     try {
-        const response = await api.get(`/user/username/${username}`);
+        const response = await apiNoToken.get(`/user/username/${username}`);
         return response.data;
     } catch (error) {
         console.error("Failed to load user details", error);

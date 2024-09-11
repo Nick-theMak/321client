@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Box, Button } from '@mui/material';
 import { api } from "../networking/api";
+import { useAlert } from "../elements/hooks/useAlert";
+import AlertPopup from "../elements/AlertPopup";
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
@@ -11,6 +13,7 @@ import './StudentLoginScreen.css';
 
 function HostSignupScreen() {
     const navigate = useNavigate(); // Hook to navigate programmatically
+    const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -30,9 +33,22 @@ function HostSignupScreen() {
 
     // Handler for form submission
     const handleSignup = async () => {
-        // Check if passwords match
+        if (formData.email === ''
+            || formData.username === ''
+            || formData.password === ''
+            || formData.confirmPassword === ''
+            || formData.school === '') {
+            showAlert("Please fill in all of the fields.");
+            return;
+        }
+
+        if (formData.password.length < 8) {
+            showAlert("Password must be at least 8 characters long.");
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
+            showAlert("Passwords do not match");
             return;
         }
 
@@ -47,8 +63,9 @@ function HostSignupScreen() {
         try {
             const response = await api.post('/user/teacher', teacherData); // API request to create a new teacher
             console.log("Signup successful:", response.data);
-            navigate('/login'); // Redirect to login on successful signup
+            showAlert("Account created successfully.", () => navigate('/login'));
         } catch (error) {
+            showAlert("Signup failed.");
             console.error("Signup failed:", error); // Log any errors during signup
         }
     };
@@ -125,11 +142,17 @@ function HostSignupScreen() {
                         helperText="Enter the school you are teaching in"
                     />
                     <Box className="form-actions">
-                    <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
-                    <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
+                        <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
                     </Box>
                 </form>
             </div>
+            <AlertPopup
+                open={alertOpen}
+                title="Host Account Signup"
+                description={alertMessage}
+                onClose={closeAlert}  // Close handler from the custom hook
+            />
         </div>
     );
 }

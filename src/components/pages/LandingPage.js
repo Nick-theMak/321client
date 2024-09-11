@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { isTokenExpired } from '../networking/api';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import { Typography, TextField, Button, Box } from '@mui/material';
 
 const LandingPage = () => {
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+
+      if (isTokenExpired(token)) {
+        localStorage.removeItem('token');
+        console.log("Token has expired. Removed from storage.");
+      } else {
+        console.log("Token is still valid.");
+      }
+    } else {
+      console.log("Nonexistent token.");
+    }
+
+  }, []);
 
   //navigation handlers
   const navigate = useNavigate();
