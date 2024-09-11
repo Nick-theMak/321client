@@ -79,6 +79,7 @@ function StudentAccountManagement() {
             // console.log(localStorage.getItem('user'));
             console.error("Update failed:", error);
         }
+
     };
 
     return (
