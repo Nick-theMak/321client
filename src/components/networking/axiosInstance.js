@@ -1,5 +1,6 @@
 import axios from "axios";
-import { url } from "./url"; // Import the base URL for the API
+import { url } from "./url";
+
 
 // Create an Axios instance with a base URL
 const axiosInstance = axios.create({

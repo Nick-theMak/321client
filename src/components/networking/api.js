@@ -24,13 +24,6 @@ export const api = axios.create({
     }
 });
 
-export const apiNoToken = axios.create({
-    baseURL: url,
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-
 export const socketUrl = "http://localhost:8085/ws";
 
 // Interceptor to add authorization token to each request if available
