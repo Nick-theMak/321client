@@ -98,10 +98,10 @@ function StudentLoginScreen() {
             margin="normal"
             helperText="Please enter your password."
           />
-          <div className="remember-me">
+          {/* <div className="remember-me">
             <md-checkbox></md-checkbox>
             <label>Remember Me</label>
-          </div>
+          </div> */}
           <Button fullWidth variant="contained" color="primary" type="submit">Sign in</Button>
         </form>
         <div className="account-links">

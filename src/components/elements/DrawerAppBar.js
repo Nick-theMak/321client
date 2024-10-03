@@ -69,6 +69,12 @@ const DrawerAppBar = () => {
           <ListItem button onClick={() => handleNavigation('/student-dashboard/accessibility-options')}>
             <ListItemText primary="Accessibility Options" classes={{ primary: 'listItemText' }} />
           </ListItem>
+          <ListItem button onClick={() => handleNavigation('/rooms')}>
+            <ListItemText primary="Rooms1" classes={{ primary: 'listItemText' }} />
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/rooms-two')}>
+            <ListItemText primary="Rooms2" classes={{ primary: 'listItemText' }} />
+          </ListItem>
           <br></br>
           <ListItem button onClick={() => handleLogout()}>
             <ListItemText primary="Log Out" classes={{ primary: 'listItemText' }} />

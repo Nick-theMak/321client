@@ -8,6 +8,7 @@ import StudentAccountManagement from './StudentAccountManagement';
 import PastCompetitions from './PastCompetitions';
 import AccessibilityOptions from './AccessibilityOptions';
 import AdminDashboard from './AdminDashboard';
+import Rooms2 from '../rooms/Rooms2';
 
 const StudentDashboard = () => {
   return (
