@@ -12,6 +12,7 @@
 .logoContainer {
     display: flex;
     flex-direction: column;
+    position: relative;
     align-items: center;
     text-align: center;
     flex-grow: 1;

@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { isTokenExpired } from '../networking/api';
 import { useNavigate } from 'react-router-dom';
+import { loadChallenges } from '../networking/api';
 import './LandingPage.css';
 import { Typography, TextField, Button, Box } from '@mui/material';
+
+
 
 const LandingPage = () => {
 
@@ -23,11 +26,15 @@ const LandingPage = () => {
 
   }, []);
 
+  
+
   //navigation handlers
   const navigate = useNavigate();
 
-  const handleEnterCompetition = () => {
-    navigate('/enter-competition');
+
+
+  const handleStartChallenge = () => {
+    navigate('/rooms');
   };
 
   const handleStudentSignup = () => {
@@ -42,6 +49,8 @@ const LandingPage = () => {
     navigate('/login');
   }
 
+
+
   return (
     <div className="landing-page">
       <img src={require('../../assets/images/extended_logo.png')} alt="Capture the Future" className="logo" />
@@ -53,7 +62,7 @@ const LandingPage = () => {
             <p>Get the code that your teacher has projected onto the board, join a team, then solve challenges to earn points.</p>
             <div className="buttons">
               <Button variant="contained" color="primary" onClick={handleStudentSignup}>Sign Up</Button>
-              <Button variant="contained" color="secondary" onClick={handleEnterCompetition}>Enter Competition</Button>
+              <Button variant="contained" color="secondary" onClick={() => handleStartChallenge()}>Try a sample challenge</Button>
             </div>
           </div>
         </div>
