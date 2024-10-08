@@ -151,3 +151,32 @@ export const signupHost = async (hostData) => {
         throw error;
     }
 };
+
+
+
+// API call to load open challenges (boilerplate)
+export const loadOpenChallenges = async () => {
+    try {
+        // Placeholder for the actual API call
+        // The real endpoint might look like '/challenges/open'
+        const response = await api.get('/challenges/open');
+        return response.data; // Assuming the API returns a list of challenges
+    } catch (error) {
+        console.error('Failed to load open challenges:', error);
+        throw error;
+    }
+};
+
+// API call to load user team points and ranking (boilerplate)
+export const getUserTeamPointsAndRanking = async (username) => {
+    try {
+        // Placeholder for the actual API call
+        // The real endpoint might look like `/user/${username}/team-points-ranking`
+        const response = await api.get(`/user/${username}/team-points-ranking`);
+        return response.data; // Assuming the API returns an object with teamPoints and ranking
+    } catch (error) {
+        console.error('Failed to fetch team points and ranking:', error);
+        throw error;
+    }
+};
+

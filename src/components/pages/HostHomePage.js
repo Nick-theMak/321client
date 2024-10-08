@@ -7,6 +7,10 @@ const HostHomePage = () => {
   const [user, setUser] = useState('');
   const navigate = useNavigate();
 
+  const handleNavigation = () => {
+    navigate('/host-dashboard/start-competition');
+  };
+
   useEffect(() => {
     const loadUser = async () => {
       const userDetails = JSON.parse(localStorage.getItem('user')); // load user details from local storage
@@ -43,7 +47,7 @@ const HostHomePage = () => {
             <div className="action-content">
               <h3>Host a Competition</h3>
               <p>Configure and host a competition for the participants.</p>
-              <button className="start-competition-button">Start Competition</button>
+              <button onClick={() => handleNavigation('/host-dashboard/host-competition')}  className="start-competition-button">Start Competition</button>
             </div>
           </div>
           <div className="action-card">
