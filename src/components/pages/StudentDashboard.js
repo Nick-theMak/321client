@@ -8,8 +8,8 @@ import StudentAccountManagement from './StudentAccountManagement';
 import PastCompetitions from './PastCompetitions';
 import AccessibilityOptions from './AccessibilityOptions';
 import AdminDashboard from './AdminDashboard';
-import JoinCompetition from './JoinCompetition';  // Import the new JoinCompetition component
-import ChallengeLobby from './ChallengeLobby';
+import JoinCompetition from './JoinCompetition';  // Import JoinCompetition component
+import ChallengeLobby from './ChallengeLobby';    // Import ChallengeLobby component
 
 const StudentDashboard = () => {
   return (
@@ -24,7 +24,7 @@ const StudentDashboard = () => {
         <Route path="accessibility-options" element={<AccessibilityOptions />} />
         <Route path="admin-dashboard" element={<AdminDashboard />} />
         <Route path="join-competition" element={<JoinCompetition />} /> 
-      <Route path="challenge-lobby/:competitionCode" element={<ChallengeLobby />} /> 
+        <Route path="challenge-lobby/:competitionCode" element={<ChallengeLobby />} /> 
       </Routes>
     </div>
   );

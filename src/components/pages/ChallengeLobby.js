@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchCompetitionDetails, fetchTeams } from '../networking/api';  // API functions for fetching data
+import { fetchCompetitionDetails, fetchTeams } from '../networking/api';  // Correct API functions
 import { Button, Typography, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import './ChallengeLobby.css';
 

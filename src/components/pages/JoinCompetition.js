@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography } from '@mui/material';
-import { joinCompetition } from '../networking/api';  // Import API function to join competition
+import { joinCompetition } from '../networking/api';  // Correct API function
 import './JoinCompetition.css';
 
 const JoinCompetition = () => {
