@@ -8,11 +8,11 @@ import StudentAccountManagement from './StudentAccountManagement';
 import PastCompetitions from './PastCompetitions';
 import AccessibilityOptions from './AccessibilityOptions';
 import AdminDashboard from './AdminDashboard';
-import Rooms2 from '../rooms/Rooms2';
+import JoinCompetition from './JoinCompetition';  // Import the new JoinCompetition component
+import ChallengeLobby from './ChallengeLobby';
 
 const StudentDashboard = () => {
   return (
-    // Extending Routes to include all the routes for the student dashboard
     <div>
       <DrawerAppBar />
       <Routes>
@@ -23,6 +23,8 @@ const StudentDashboard = () => {
         <Route path="past-competitions" element={<PastCompetitions />} />
         <Route path="accessibility-options" element={<AccessibilityOptions />} />
         <Route path="admin-dashboard" element={<AdminDashboard />} />
+        <Route path="join-competition" element={<JoinCompetition />} /> 
+      <Route path="challenge-lobby/:competitionCode" element={<ChallengeLobby />} /> 
       </Routes>
     </div>
   );

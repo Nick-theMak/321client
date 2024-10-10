@@ -11,7 +11,6 @@ const placeholderChallenges = [
     name: 'Cybersecurity Challenge',
     description: 'Test your knowledge on various cybersecurity concepts.',
     difficulty: 'Intermediate',
-    dateStarted: '2024-10-01',
     status: 'Finished',
   },
   {
@@ -19,15 +18,13 @@ const placeholderChallenges = [
     name: 'Hashing',
     description: 'Hashing challenge.',
     difficulty: 'Beginner',
-    dateStarted: '2024-10-02',
-    status: 'In progress',
+    status: 'Not started',
   },
   {
     id: 3,
     name: 'OSINT',
     description: 'Test your knowledge on OSINT.',
     difficulty: 'Advanced',
-    dateStarted: '2024-10-03',
     status: 'Not started',
   },
 ];
@@ -97,7 +94,7 @@ const CompetitionHomePage = () => {
 
   // Split challenges into "open" and "past"
   const openChallengesList = openChallenges.filter(
-    (challenge) => challenge.status === 'Not started' || challenge.status === 'In progress'
+    (challenge) => challenge.status === 'Not started'
   );
   const pastChallengesList = openChallenges.filter((challenge) => challenge.status === 'Finished');
 
@@ -111,11 +108,29 @@ const CompetitionHomePage = () => {
     navigate(`/challenge-lobby/${challengeId}`); // Redirect to lobby
   };
 
+  // Handle navigation to the JoinCompetition page
+  const handleJoinCompetition = () => {
+    navigate('/join-competition');
+  };
+
   return (
     <div className="competition-home-page">
       <Typography variant="h5" className="header">
         Welcome {user.username}!
       </Typography>
+
+      {/* Join Competition Button */}
+      <div className="join-competition-section">
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleJoinCompetition}
+          className="join-competition-button"
+        >
+          Join a Competition
+        </Button>
+      </div>
+
       <div className="stats">
         <div className="stat">
           <h4>Current Team Points</h4>
@@ -135,7 +150,6 @@ const CompetitionHomePage = () => {
             <TableCell>Title</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Difficulty</TableCell>
-            <TableCell>Date Started</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
@@ -146,7 +160,6 @@ const CompetitionHomePage = () => {
               <TableCell>{challenge.name}</TableCell>
               <TableCell>{challenge.description}</TableCell>
               <TableCell>{challenge.difficulty}</TableCell>
-              <TableCell>{challenge.dateStarted}</TableCell>
               <TableCell>{challenge.status}</TableCell>
               <TableCell>
                 <Button
@@ -174,7 +187,6 @@ const CompetitionHomePage = () => {
                 <TableCell>Title</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Difficulty</TableCell>
-                <TableCell>Date Started</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
@@ -185,7 +197,6 @@ const CompetitionHomePage = () => {
                   <TableCell>{challenge.name}</TableCell>
                   <TableCell>{challenge.description}</TableCell>
                   <TableCell>{challenge.difficulty}</TableCell>
-                  <TableCell>{challenge.dateStarted}</TableCell>
                   <TableCell>{challenge.status}</TableCell>
                   <TableCell>
                     <Button

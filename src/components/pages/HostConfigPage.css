@@ -1,0 +1,101 @@
+/* Container for the host configuration page */
+.host-config-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Title styling within the HostConfigPage */
+  .host-config-page .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  /* Section headers */
+  .host-config-page .section-header {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+  
+  /* Form input styling scoped to this page */
+  .host-config-page .MuiTextField-root {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* Button styling within the HostConfigPage */
+  .host-config-page .MuiButton-root {
+    margin-top: 10px;
+    background-color: #1976d2;
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  .host-config-page .MuiButton-root:hover {
+    background-color: #1565c0;
+  }
+  
+  /* Section container grid layout */
+  .host-config-page .MuiGrid-item {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Teams section */
+  .host-config-page .teams-list {
+    margin-top: 15px;
+  }
+  
+  .host-config-page .teams-list h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .host-config-page .teams-list div {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .host-config-page .teams-list h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .host-config-page .teams-list p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Live scores section */
+  .host-config-page .scores-list {
+    margin-top: 15px;
+  }
+  
+  .host-config-page .scores-list h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .host-config-page .scores-list div {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .host-config-page .scores-list h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  

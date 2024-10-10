@@ -1,0 +1,29 @@
+.join-competition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+  }
+  
+  .header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .competition-code-input {
+    margin-bottom: 20px;
+    width: 300px;
+  }
+  
+  .join-button {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .join-button:hover {
+    background-color: #1565c0;
+  }
+  

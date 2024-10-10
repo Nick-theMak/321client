@@ -1,0 +1,37 @@
+.challenge-lobby {
+    padding: 20px;
+  }
+  
+  .header {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f5f5f5;
+  }
+  
+  .start-challenge-button {
+    background-color: #1976d2;
+    color: white;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .start-challenge-button:hover {
+    background-color: #1565c0;
+  }
+  

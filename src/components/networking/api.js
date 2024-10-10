@@ -180,3 +180,163 @@ export const getUserTeamPointsAndRanking = async (username) => {
     }
 };
 
+
+
+  // Fetch teams
+export const getTeams = async () => {
+    try {
+      const response = await axiosInstance.get('/api/team/all');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+
+ 
+
+
+  // Competition-related API
+export const createCompetition = async (maxTeams, maxTeamSize) => {
+    try {
+      const response = await axiosInstance.post('/api/competition/create', {
+        maxTeams: parseInt(maxTeams),
+        maxTeamSize: parseInt(maxTeamSize),
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  // Team-related API
+  export const createTeam = async (competitionId, teamName) => {
+    try {
+      const response = await axiosInstance.post(`/api/team/create?competitionId=${competitionId}`, {
+        teamName,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  export const addTeamMember = async (teamPassword, studentUsername) => {
+    try {
+      const response = await axiosInstance.post(`/api/team/addMember`, null, {
+        params: {
+          teamPassword,
+          studentUsername,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  export const removeTeamMember = async (teamName, studentUsername) => {
+    try {
+      const response = await axiosInstance.delete(`/api/team/removeMember`, {
+        params: {
+          teamName,
+          studentUsername,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  // Challenge-related API
+  export const createChallenge = async (competitionId, name, description, difficulty, points) => {
+    try {
+      const response = await axiosInstance.post(`/api/challenge/new`, {
+        competitionId,
+        name,
+        description,
+        difficulty,
+        points,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  // Question-related API
+  export const addQuestion = async (challengeId, questionText, options, correctOption, points) => {
+    try {
+      const response = await axiosInstance.post(`/api/question/new?challengeId=${challengeId}`, {
+        questionText,
+        options,
+        correctOption,
+        points,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  // Live room monitoring
+  export const fetchLiveScores = async (competitionId) => {
+    try {
+      const response = await axiosInstance.get(`/api/competition/${competitionId}/scores`);
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+  
+  export const fetchTeams = async (competitionId) => {
+    try {
+      const response = await axiosInstance.get(`/api/competition/${competitionId}/teams`);
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error('Server error');
+    }
+  };
+
+  // Get all competitions (adjust the endpoint if necessary)
+export const getAllCompetitions = async () => {
+    try {
+      const response = await axiosInstance.get('/api/competition/all');
+      return response.data; // Assuming response contains an array of competitions
+    } catch (error) {
+      console.error('Failed to fetch competitions:', error);
+      throw error;
+    }
+  };
+
+
+  // End the competition
+export const endCompetition = async (competitionCode) => {
+  try {
+    const response = await axiosInstance.post(`/api/competition/${competitionCode}/end`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// API to join a competition
+export const joinCompetition = async (competitionCode) => {
+  try {
+    const response = await axiosInstance.post(`/api/competition/${competitionCode}/join`);
+    return response.data;  // Assuming it returns success or error
+  } catch (error) {
+    throw error;
+  }
+};
+
+// API to fetch competition details
+export const fetchCompetitionDetails = async (competitionCode) => {
+  try {
+    const response = await axiosInstance.get(`/api/competition/${competitionCode}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
