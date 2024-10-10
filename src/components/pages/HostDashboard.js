@@ -11,6 +11,7 @@ import HostPastCompetitions from './HostPastCompetitions';
 import HostCompetition from './HostCompetition';
 import HostAccountManagement from './HostAccountManagement';
 import AccessibilityOptions from './AccessibilityOptions';
+import OfflineResources from './OfflineResources';
 
 const HostDashboard = () => {
   return (
@@ -23,6 +24,7 @@ const HostDashboard = () => {
           <Route path="/host-competition" element={<HostCompetition />} />
           <Route path="account-management" element={<HostAccountManagement />} />
           <Route path="accessibility-options" element={<AccessibilityOptions />} />
+          <Route path="offline-resources" element={<OfflineResources />} />
       </Routes></>
     
   );

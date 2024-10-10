@@ -1,0 +1,36 @@
+.offline-resources {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .offline-resources .header {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .offline-resources .description {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .offline-resources .MuiListItem-root {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .offline-resources .MuiListItem-root:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .offline-resources .MuiListItemIcon-root {
+    min-width: 40px;
+  }
+  
+  .offline-resources .MuiTypography-root {
+    color: #333;
+  }
+  
