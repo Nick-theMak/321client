@@ -62,31 +62,6 @@ const HostConfigPage = () => {
           <Button onClick={handleCompetitionSubmit}>Create Competition</Button>
         </Grid>
 
-        {/* Challenge Section */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5">Create Challenge</Typography>
-          <TextField
-            label="Challenge Name"
-            value={challengeDetails.challengeName}
-            onChange={(e) => setChallengeDetails({ ...challengeDetails, challengeName: e.target.value })}
-          />
-          <TextField
-            label="Description"
-            value={challengeDetails.description}
-            onChange={(e) => setChallengeDetails({ ...challengeDetails, description: e.target.value })}
-          />
-          <TextField
-            label="Difficulty"
-            value={challengeDetails.difficulty}
-            onChange={(e) => setChallengeDetails({ ...challengeDetails, difficulty: e.target.value })}
-          />
-          <TextField
-            label="Points"
-            value={challengeDetails.points}
-            onChange={(e) => setChallengeDetails({ ...challengeDetails, points: e.target.value })}
-          />
-          <Button onClick={handleChallengeSubmit}>Create Challenge</Button>
-        </Grid>
 
       </Grid>
 

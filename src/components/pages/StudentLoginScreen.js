@@ -1,25 +1,23 @@
+// src/pages/StudentLoginScreen.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { api, loadUserDetails } from "../networking/api";
 import AlertPopup from "../elements/AlertPopup";
 import { useAlert } from "../elements/hooks/useAlert";
+import { sendForgotPasswordEmail } from '../../services/emailService'; // Import the email service
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
-import '@material/web/textfield/outlined-text-field.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
-import { TextField, Button } from '@mui/material';
 
 function StudentLoginScreen() {
-  const navigate = useNavigate(); // Hook to navigate programmatically
-  const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  }); // State to manage form data
+  const navigate = useNavigate();
+  const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert();
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false); // Manage forgot password dialog
+  const [email, setEmail] = useState(''); // Email input for forgot password
 
-  // Handler for form input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -27,40 +25,44 @@ function StudentLoginScreen() {
     });
   };
 
-  // Handler for form submission
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent form from submitting the default way
+    e.preventDefault();
 
     if (formData.username === '' || formData.password === '') {
       showAlert("Please fill in all of the fields.");
       return;
     }
 
-    const loginData = {
-      username: formData.username,
-      password: formData.password
-    };
-
-    console.log(loginData);
-
     try {
-      const response = await api.post('/user/login', loginData); // API request to log in
-      localStorage.setItem('token', response.data.details.token); // Save token to local storage
+      const response = await api.post('/user/login', formData);
+      localStorage.setItem('token', response.data.details.token);
 
-      const userDetails = await loadUserDetails(formData.username); // Load user details
-      localStorage.setItem('user', JSON.stringify(userDetails)); // Save user details to local storage
+      const userDetails = await loadUserDetails(formData.username);
+      localStorage.setItem('user', JSON.stringify(userDetails));
 
       // Redirect based on user role
       if (userDetails.role === 'STUDENT') {
-        navigate('/student-dashboard'); // Redirect to student dashboard
+        navigate('/student-dashboard');
       } else if (userDetails.role === 'TEACHER') {
-        navigate('/host-dashboard'); // Redirect to host dashboard
+        navigate('/host-dashboard');
       } else if (userDetails.role === 'ADMIN') {
-        navigate('/admin-dashboard'); // Redirect to admin dashboard
+        navigate('/admin-dashboard');
       }
     } catch (error) {
       showAlert('Login failed. Please check your username and password.');
     }
+  };
+
+  const handleForgotPassword = () => {
+    if (email === '') {
+      showAlert('Please enter an email address.');
+      return;
+    }
+
+    // Send forgot password email
+    sendForgotPasswordEmail(email);
+    showAlert('A password reset email has been sent to the admin team.');
+    setForgotPasswordOpen(false);
   };
 
   return (
@@ -98,12 +100,29 @@ function StudentLoginScreen() {
             margin="normal"
             helperText="Please enter your password."
           />
-          {/* <div className="remember-me">
-            <md-checkbox></md-checkbox>
-            <label>Remember Me</label>
-          </div> */}
           <Button fullWidth variant="contained" color="primary" type="submit">Sign in</Button>
         </form>
+        <Button onClick={() => setForgotPasswordOpen(true)}>Forgot Password?</Button>
+
+        {/* Forgot Password Dialog */}
+        <Dialog open={forgotPasswordOpen} onClose={() => setForgotPasswordOpen(false)}>
+          <DialogTitle>Forgot Password</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Enter your email"
+              type="email"
+              fullWidth
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setForgotPasswordOpen(false)}>Cancel</Button>
+            <Button onClick={handleForgotPassword}>Submit</Button>
+          </DialogActions>
+        </Dialog>
+
         <div className="account-links">
           <a href="/student-signup">Create Student Account</a>
           <a href="/host-signup">Create Host Account</a>
@@ -113,7 +132,7 @@ function StudentLoginScreen() {
         open={alertOpen}
         title="Login Error"
         description={alertMessage}
-        onClose={closeAlert}  // Close handler from the custom hook
+        onClose={closeAlert}
       />
     </div>
   );

@@ -1,9 +1,12 @@
+// src/pages/HostSignupScreen.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Box, Button } from '@mui/material';
 import { api } from "../networking/api";
 import { useAlert } from "../elements/hooks/useAlert";
 import AlertPopup from "../elements/AlertPopup";
+import { sendHostSignupEmail } from '../../services/emailService';  // Import the email service
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
@@ -12,17 +15,16 @@ import '@material/web/icon/icon.js';
 import './StudentLoginScreen.css';
 
 function HostSignupScreen() {
-    const navigate = useNavigate(); // Hook to navigate programmatically
-    const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
+    const navigate = useNavigate();
+    const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert();
     const [formData, setFormData] = useState({
         email: '',
         username: '',
         password: '',
         confirmPassword: '',
         school: ''
-    }); // State to manage form data
+    });
 
-    // Handler for form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -31,7 +33,6 @@ function HostSignupScreen() {
         });
     };
 
-    // Handler for form submission
     const handleSignup = async () => {
         if (formData.email === ''
             || formData.username === ''
@@ -48,7 +49,7 @@ function HostSignupScreen() {
         }
 
         if (formData.password !== formData.confirmPassword) {
-            showAlert("Passwords do not match");
+            showAlert("Passwords do not match.");
             return;
         }
 
@@ -64,9 +65,13 @@ function HostSignupScreen() {
             const response = await api.post('/user/teacher', teacherData); // API request to create a new teacher
             console.log("Signup successful:", response.data);
             showAlert("Account created successfully.", () => navigate('/login'));
+
+            // Send host signup confirmation email
+            sendHostSignupEmail(formData.username, formData.email, formData.school);
+
         } catch (error) {
             showAlert("Signup failed.");
-            console.error("Signup failed:", error); // Log any errors during signup
+            console.error("Signup failed:", error);
         }
     };
 
@@ -151,7 +156,7 @@ function HostSignupScreen() {
                 open={alertOpen}
                 title="Host Account Signup"
                 description={alertMessage}
-                onClose={closeAlert}  // Close handler from the custom hook
+                onClose={closeAlert}
             />
         </div>
     );

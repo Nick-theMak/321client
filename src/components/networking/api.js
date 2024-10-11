@@ -341,4 +341,26 @@ export const fetchCompetitionDetails = async (competitionCode) => {
   }
 };
 
+// Fetch room details by roomId
+export const fetchRoomDetails = async (roomId) => {
+  try {
+      const response = await api.get(`/api/room/${roomId}`);
+      return response.data;
+  } catch (error) {
+      console.error("Failed to fetch room details", error);
+      throw error;
+  }
+};
+
+// Fetch questions for a room by roomId
+export const fetchRoomQuestions = async (roomId) => {
+  try {
+      const response = await api.get(`/api/room/${roomId}/questions`);
+      return response.data;
+  } catch (error) {
+      console.error("Failed to fetch room questions", error);
+      throw error;
+  }
+};
+
 

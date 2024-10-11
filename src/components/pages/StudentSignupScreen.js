@@ -1,4 +1,5 @@
 // src/pages/StudentSignupScreen.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Checkbox, FormControlLabel, Typography, Button, Box } from '@mui/material';
@@ -8,19 +9,19 @@ import '@material/web/button/outlined-button.js';
 import '@material/web/button/filled-button.js';
 import './StudentSignupScreen.css';
 import AlertPopup from "../elements/AlertPopup";
+import { sendSignupEmail } from  '../../services/emailService';
 
 function StudentSignupScreen() {
-  const navigate = useNavigate(); // Hook to navigate programmatically
-  const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert(); // Use the custom hook for alert
+  const navigate = useNavigate();
+  const { alertOpen, alertMessage, showAlert, closeAlert } = useAlert();
   const [formData, setFormData] = useState({
     email: '',
     username: '',
     password: '',
     confirmPassword: '',
     yearLevel: 1
-  }); // State to manage form data
+  });
 
-  // Handler for form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -29,14 +30,12 @@ function StudentSignupScreen() {
     });
   };
 
-  // Handler for form submission
   const handleSignup = async () => {
     if (formData.email === ''
       || formData.username === ''
       || formData.password === ''
       || formData.confirmPassword === '') {
         showAlert("Please fill in all of the fields.");
-      // alert("Please fill in all of the fields.");
       return;
     }
 
@@ -47,17 +46,14 @@ function StudentSignupScreen() {
 
     if (formData.password.length < 8 ) {
       showAlert("Password must be at least 8 characters long.");
-      // alert("Password must be at least 8 characters long.");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      showAlert("Passwords do not match.")
-      // alert("Passwords do not match.");
+      showAlert("Passwords do not match.");
       return;
     }
 
-    // Prepare student data for API request
     const studentData = {
       email: formData.email,
       username: formData.username,
@@ -65,16 +61,15 @@ function StudentSignupScreen() {
       yearLevel: formData.yearLevel
     };
 
-    console.log(studentData);
-
     try {
       const response = await api.post('/user/student', studentData); // API request to create a new student
       showAlert("Account created successfully.", () => navigate('/login'));
+      // Send signup confirmation email
+      sendSignupEmail(formData.username, formData.email);
       console.log("Signup successful:", response.data);
     } catch (error) {
       showAlert("Signup failed.");
-      console.error("Signup failed:", error); // Log any errors during signup
-      console.log(studentData);
+      console.error("Signup failed:", error);
     }
   };
 
@@ -91,7 +86,6 @@ function StudentSignupScreen() {
           </Typography>
         </div>
         <form onSubmit={handleSignup}>
-          {/* Email input field */}
           <TextField
             label="Email"
             type="email"
@@ -104,7 +98,6 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your email address."
           />
-          {/* Username input field */}
           <TextField
             label="Username"
             type="text"
@@ -117,7 +110,6 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your username."
           />
-          {/* Password input field */}
           <TextField
             label="Password"
             type="password"
@@ -130,7 +122,6 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please enter your password."
           />
-          {/* Confirm password input field */}
           <TextField
             label="Confirm Password"
             type="password"
@@ -143,7 +134,6 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Please confirm your password."
           />
-          {/* Year level input field */}
           <TextField
             label="Year Level"
             type="number"
@@ -156,17 +146,17 @@ function StudentSignupScreen() {
             margin="normal"
             helperText="Enter your year level."
           />
-            <Box className="form-actions">
-          <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
-          <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
-            </Box>
+          <Box className="form-actions">
+            <Button variant="contained" onClick={() => handleSignup()}>Create Account</Button>
+            <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Sign in</Button>
+          </Box>
         </form>
       </div>
       <AlertPopup
-      open={alertOpen}
-      title="Student Sign Up"
-      description={alertMessage}
-      onClose={closeAlert}
+        open={alertOpen}
+        title="Student Sign Up"
+        description={alertMessage}
+        onClose={closeAlert}
       />
     </div>
   );
