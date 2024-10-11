@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import { getAllCompetitions } from '../networking/api';
 import './Leaderboard.css';
 
 function Leaderboard() {
-  // State hook to manage players data
-  const [players, setPlayers] = useState([
-    { name: 'Player 1', score: 100 },
-    { name: 'Player 2', score: 90 },
-    { name: 'Player 3', score: 80 },
-  ]);
+  // State hook to manage team data
+  const [teams, setTeams] = useState([]);
 
+  // Fetch the team data from the API when the component mounts
   useEffect(() => {
-    // Function to update player scores at regular intervals
-    const interval = setInterval(() => {
-      setPlayers((prevPlayers) => 
-        prevPlayers.map(player => ({
-          ...player,
-          score: player.score + Math.floor(Math.random() * 10) // Randomly increment the score
-        }))
-      );
-    }, 2000); // Update every 2 seconds
-    
-    // Cleanup interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+    const fetchTeams = async () => {
+      try {
+        // Fetch all competitions data
+        const competitions = await getAllCompetitions();
+
+        // Extract team names and scores from the competitions
+        const teamsData = competitions.flatMap((competition) => 
+          competition.teamsList.map((team) => ({
+            name: team.teamName,
+            score: team.score,
+          }))
+        );
+
+        // Update the state with the teams' data
+        setTeams(teamsData);
+      } catch (error) {
+        console.error('Failed to fetch teams:', error);
+      }
+    };
+
+    fetchTeams();
+  }, []);  // Empty dependency array means this effect runs once when the component mounts
 
   return (
     <Container maxWidth="md">
@@ -32,7 +40,7 @@ function Leaderboard() {
       </Typography>
       <p>View your team's rank</p>
       
-      {/* Table container for displaying player data */}
+      {/* Table container for displaying team data */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -42,12 +50,12 @@ function Leaderboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {players.map((player, index) => (
+            {teams.map((team, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {player.name}
+                  {team.name}
                 </TableCell>
-                <TableCell align="right">{player.score}</TableCell>
+                <TableCell align="right">{team.score}</TableCell>
               </TableRow>
             ))}
           </TableBody>
