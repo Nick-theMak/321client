@@ -24,16 +24,6 @@ const ChallengesList = () => {
       }
     };
 
-    // Uncomment this section for testing purposes with mock data
-    // useEffect(() => {
-    //   const mockChallenges = [
-    //     { id: 1, title: 'Challenge 1', description: 'Description for challenge 1', difficulty: 'Easy' },
-    //     { id: 2, title: 'Challenge 2', description: 'Description for challenge 2', difficulty: 'Medium' },
-    //     { id: 3, title: 'Challenge 3', description: 'Description for challenge 3', difficulty: 'Hard' },
-    //   ];
-    //   setChallenges(mockChallenges);
-    // }, []);
-
     fetchChallenges(); // Fetch challenges when the component mounts
   }, []);
 
@@ -94,9 +84,10 @@ const ChallengesList = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Difficulty</TableCell>
+              <TableCell>Points</TableCell> {/* Add points heading */}
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -108,6 +99,7 @@ const ChallengesList = () => {
                 </TableCell>
                 <TableCell>{challenge.description}</TableCell>
                 <TableCell>{challenge.difficulty}</TableCell>
+                <TableCell>{challenge.points}</TableCell> {/* Display points */}
                 <TableCell align="right">
                   <Button
                     variant="contained"
