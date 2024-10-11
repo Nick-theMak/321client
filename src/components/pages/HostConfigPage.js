@@ -15,8 +15,9 @@ const HostConfigPage = () => {
   const handleCompetitionSubmit = async () => {
     try {
       const response = await createCompetition(competitionDetails.maxTeams, competitionDetails.maxTeamSize);
-      setCompetitionCode(response.competitionCode); // Capture competition code from backend
-      alert(`Competition created successfully! Code: ${response.competitionCode}`);
+      setCompetitionCode(response.data); // Capture competition code from backend
+      console.log(response);
+      alert(`Competition created successfully! Code: ${response}`);
     } catch (error) {
       setError('Failed to create competition: ' + (error.message || error));
     }
