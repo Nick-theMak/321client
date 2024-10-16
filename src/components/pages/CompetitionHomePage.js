@@ -2,30 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CompetitionHomePage.css';
 import { Typography, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { getUserTeamPointsAndRanking, loadOpenChallenges } from '../networking/api';
+import { getUserTeamPointsAndRanking, loadChallenges, loadOpenChallenges } from '../networking/api';
 
 // Placeholder challenges (DELETE when API is ready)
 const placeholderChallenges = [
   {
-    id: 1,
+    challengeId: 1,
     name: 'Cybersecurity Challenge',
     description: 'Test your knowledge on various cybersecurity concepts.',
     difficulty: 'Intermediate',
-    status: 'Finished',
+    isOpen: true,
   },
   {
-    id: 2,
+    challengeId: 2,
     name: 'Hashing',
     description: 'Hashing challenge.',
     difficulty: 'Beginner',
-    status: 'Not started',
+    isOpen: true,
   },
   {
-    id: 3,
+    challengeId: 3,
     name: 'OSINT',
     description: 'Test your knowledge on OSINT.',
     difficulty: 'Advanced',
-    status: 'Not started',
+    isOpen: false,
   },
 ];
 
@@ -68,9 +68,10 @@ const CompetitionHomePage = () => {
   // Fetch open challenges from the API or use placeholder
   const fetchOpenChallenges = async () => {
     try {
-      const challenges = await loadOpenChallenges();
+      const challenges = await loadChallenges();
       if (challenges && challenges.length > 0) {
         setOpenChallenges(challenges);
+        console.log(openChallenges);
       } else {
         setOpenChallenges(placeholderChallenges); // Use placeholder challenges if none returned
       }
@@ -94,18 +95,18 @@ const CompetitionHomePage = () => {
 
   // Split challenges into "open" and "past"
   const openChallengesList = openChallenges.filter(
-    (challenge) => challenge.status === 'Not started'
+    (challenge) => challenge.challengeOpen === true
   );
-  const pastChallengesList = openChallenges.filter((challenge) => challenge.status === 'Finished');
+  const pastChallengesList = openChallenges.filter((challenge) => challenge.challengeOpen === false);
 
   // Handle joining or reattempting a challenge
-  const handleJoinChallenge = (challengeId, status) => {
-    if (status === 'Finished') {
+  const handleJoinChallenge = (challengeId, isOpen) => {
+    if (isOpen === false) {
       console.log(`Reattempting challenge ${challengeId}`);
     } else {
       console.log(`Starting challenge ${challengeId}`);
     }
-    navigate(`/challenge-lobby/${challengeId}`); // Redirect to lobby
+    navigate(`/rooms/${challengeId}`); // Redirect to lobby
   };
 
   // Handle navigation to the JoinCompetition page
@@ -156,16 +157,16 @@ const CompetitionHomePage = () => {
         </TableHead>
         <TableBody>
           {openChallengesList.map((challenge) => (
-            <TableRow key={challenge.id}>
+            <TableRow key={challenge.challengeId}>
               <TableCell>{challenge.name}</TableCell>
               <TableCell>{challenge.description}</TableCell>
               <TableCell>{challenge.difficulty}</TableCell>
-              <TableCell>{challenge.status}</TableCell>
+              <TableCell>{challenge.challengeOpen}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => handleJoinChallenge(challenge.id, challenge.status)}
+                  onClick={() => handleJoinChallenge(challenge.challengeId, challenge.challengeOpen)}
                 >
                   {challenge.status === 'Finished' ? 'Reattempt' : 'Start'}
                 </Button>
@@ -193,16 +194,16 @@ const CompetitionHomePage = () => {
             </TableHead>
             <TableBody>
               {pastChallengesList.map((challenge) => (
-                <TableRow key={challenge.id}>
+                <TableRow key={challenge.challengeId}>
                   <TableCell>{challenge.name}</TableCell>
                   <TableCell>{challenge.description}</TableCell>
                   <TableCell>{challenge.difficulty}</TableCell>
-                  <TableCell>{challenge.status}</TableCell>
+                  <TableCell>{challenge.challengeOpen}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => handleJoinChallenge(challenge.id, challenge.status)}
+                      onClick={() => handleJoinChallenge(challenge.challengeId, challenge.isOpen)}
                     >
                       Reattempt
                     </Button>

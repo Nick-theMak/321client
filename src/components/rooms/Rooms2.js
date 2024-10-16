@@ -24,8 +24,8 @@ const Rooms2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const roomData = await fetchRoomDetails(1); // API call for room details
-        const questionData = await fetchRoomQuestions(1); // API call for room questions
+        const roomData = await fetchRoomDetails(roomId); // API call for room details
+        const questionData = await fetchRoomQuestions(roomId); // API call for room questions
         setRoomDetails(roomData);
         setQuestions(questionData);
         setAnswers(questionData.reduce((acc, question) => ({ ...acc, [question.questionId]: '' }), {}));

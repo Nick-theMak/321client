@@ -40,7 +40,8 @@ const ChallengesList = () => {
   // Handler for starting a challenge
   const handleStartChallenge = (challengeId) => {
     console.log(`Starting challenge with ID: ${challengeId}`);
-    navigate('/rooms');
+    alert(`Starting challenge with ID: ${challengeId}`);
+    navigate(`/rooms/${challengeId}`);
     // Implement the logic to start the challenge here
   };
 

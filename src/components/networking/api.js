@@ -159,7 +159,7 @@ export const loadOpenChallenges = async () => {
   try {
     // Placeholder for the actual API call
     // The real endpoint might look like '/challenges/open'
-    const response = await api.get('/challenges/open');
+    const response = await api.get('/challenge/open');
     return response.data; // Assuming the API returns a list of challenges
   } catch (error) {
     console.error('Failed to load open challenges:', error);
@@ -354,6 +354,16 @@ export const fetchRoomDetails = async (roomId) => {
     throw error;
   }
 };
+
+export const fetchAllRooms = async () => {
+  try {
+    const response = await api.get(`/room/all`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch rooms", error);
+    throw error;
+  }
+}
 
 // Fetch questions for a room by roomId
 export const fetchRoomQuestions = async (roomId) => {

@@ -19,6 +19,7 @@ import AccessibilityOptions from './components/pages/AccessibilityOptions';
 import AdminDashboard from './components/pages/AdminDashboard';
 import Rooms from './components/rooms/Rooms';
 import Rooms2 from './components/rooms/Rooms2';
+import RoomsList from './components/rooms/RoomsList';
 
 
 function App() {
@@ -34,8 +35,9 @@ function App() {
         <Route path="/enter-competition" element={<EnterCompetition />} />
         <Route path="/accessibility-options" element={<AccessibilityOptions/>} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/rooms-two" element={<Rooms2 />} />
+        <Route path="/rooms/:challengeId" element={<Rooms />} />
+        <Route path="/rooms-list" element={<RoomsList />} />
+        <Route path="/rooms-two/:roomId" element={<Rooms2 />} />
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </Router>

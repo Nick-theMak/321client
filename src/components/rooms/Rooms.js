@@ -14,6 +14,7 @@ import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
 import "./rooms.css";
+import { useParams } from "react-router-dom";
 
 const SECS_PER_QUESTION = 5; // Constant for the time per question
 
@@ -104,6 +105,8 @@ export default function Rooms() {
     dispatch,
   ] = useReducer(reducer, initialState);
 
+  const { challengeId } = useParams();
+
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
     (prev, cur) => prev + cur.points,
@@ -113,7 +116,7 @@ export default function Rooms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await loadQuestions(1);
+        const data = await loadQuestions(challengeId);
         console.log(data);
         dispatch({
           type: "dataReceived",
@@ -150,7 +153,7 @@ export default function Rooms() {
     return () => {
       client.deactivate();
     };
-  }, []);
+  }, [challengeId]);
 
   return (
     <>
