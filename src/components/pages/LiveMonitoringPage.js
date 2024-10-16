@@ -120,7 +120,7 @@ const LiveMonitoringPage = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate('/host-dashboard')}
         sx={{ marginBottom: '20px' }}
       >
         ← Back
