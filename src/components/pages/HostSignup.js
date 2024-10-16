@@ -1,5 +1,3 @@
-// src/pages/HostSignupScreen.jsx
-
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Box, Button } from '@mui/material';
