@@ -1,3 +1,5 @@
+/* LandingPage.css */
+
 .landing-page {
   background-color: #080705;
   display: flex;
@@ -22,7 +24,7 @@
 
 .card {
   background-color: #1c1c1c;
-  color: #1c1c1c;
+  color: #1c1c1c; /* Ensure text is visible against dark background */
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -35,6 +37,17 @@
   width: 100%;
   height: auto;
   border-radius: 10px;
+}
+
+/* Add styles for the card-icon */
+.card-icon {
+  font-size: 150px;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.card-icon:hover {
+  color: #cccccc;
 }
 
 .card-content {
@@ -78,3 +91,4 @@
     max-width: 90%;
   }
 }
+

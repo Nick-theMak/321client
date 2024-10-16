@@ -84,7 +84,7 @@ const LandingPage = () => {
         </div>
         <div className="card">
           <img
-            src={require('../../assets/images/Login.webp')}
+            src={require('../../assets/images/loginlogo.jpg')}
             alt="Existing Account"
           />
           <div className="card-content">
