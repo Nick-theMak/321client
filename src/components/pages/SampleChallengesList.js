@@ -1,46 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchAllRooms } from '../networking/api';
-import { useParams } from 'react-router-dom';
+import { loadChallenges } from '../networking/api';
 import {
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
+  Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel
 } from '@mui/material';
-import './RoomsList.css';
-import DrawerAppBar from '../elements/DrawerAppBar';
+import './SampleChallengesList.css';
+import SampleDrawerAppBar from '../elements/SampleDrawerAppBar';
 
-const RoomsList = () => {
-  // State hooks to manage rooms data, search term, and difficulty filter
-  const [rooms, setRooms] = useState([]); // State to store rooms data
+const SampleChallengesList = () => {
+  // State hooks to manage challenges data, search term, and difficulty filter
+  const [challenges, setChallenges] = useState([]); // State to store challenges data
   const [searchTerm, setSearchTerm] = useState(''); // State to store search term
   const [difficultyFilter, setDifficultyFilter] = useState(''); // State to store difficulty filter
   const navigate = useNavigate(); // Hook to navigate programmatically
 
   useEffect(() => {
-    // Function to fetch rooms from the API
-    const fetchRooms = async () => {
+    // Function to fetch challenges from the API
+    const fetchChallenges = async () => {
       try {
-        const rooms = await fetchAllRooms();
-        setRooms(rooms); // Set the rooms state with fetched data
+        const challenges = await loadChallenges();
+        setChallenges(challenges); // Set the challenges state with fetched data
       } catch (err) {
-        console.error('Failed to fetch rooms', err);
+        console.error('Failed to fetch challenges', err);
       }
     };
 
-    fetchRooms(); // Fetch rooms when the component mounts
+    fetchChallenges(); // Fetch challenges when the component mounts
   }, []);
 
   // Handler for search input change
@@ -53,30 +38,29 @@ const RoomsList = () => {
     setDifficultyFilter(e.target.value); // Update the difficulty filter state
   };
 
-  // Handler for starting a room
-  const handleStartRoom = (roomId) => {
-    console.log(`Starting room with ID: ${roomId}`);
-    navigate(`/rooms-two/${roomId}`);
-    // Implement the logic to start the room here
+  // Handler for starting a challenge
+  const handleStartChallenge = (challengeId) => {
+    console.log(`Starting challenge with ID: ${challengeId}`);
+    navigate(`/sampleRoom/${challengeId}`);
+    // Implement the logic to start the challenge here
   };
 
-  // Filter rooms based on search term and difficulty filter
-  const filteredRooms = rooms.filter((room) => {
+  // Filter challenges based on search term and difficulty filter
+  const filteredChallenges = challenges.filter((challenge) => {
     return (
-      room.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (difficultyFilter === '' || room.difficulty === difficultyFilter)
+      challenge.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (difficultyFilter === '' || challenge.difficulty === difficultyFilter)
     );
   });
 
   return (
-    <>
-    <DrawerAppBar/>
-      <Container maxWidth="md">
+    <SampleDrawerAppBar>
+      <Container>
         <Typography variant="h5" className="header">
-          Rooms List
+          Challenges List
         </Typography>
         <TextField
-          label="Search Rooms"
+          label="Search Challenges"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -105,24 +89,24 @@ const RoomsList = () => {
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Difficulty</TableCell>
-                <TableCell>Points</TableCell>
+                <TableCell>Points</TableCell> {/* Add points heading */}
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRooms.map((room) => (
-                <TableRow key={room.roomId} className="table-row">
+              {filteredChallenges.map((challenge) => (
+                <TableRow key={challenge.challengeId} className="table-row">
                   <TableCell component="th" scope="row">
-                    {room.name}
+                    {challenge.name}
                   </TableCell>
-                  <TableCell>{room.description}</TableCell>
-                  <TableCell>{room.difficulty}</TableCell>
-                  <TableCell>{room.points}</TableCell>
+                  <TableCell>{challenge.description}</TableCell>
+                  <TableCell>{challenge.difficulty}</TableCell>
+                  <TableCell>{challenge.points}</TableCell> {/* Display points */}
                   <TableCell align="right">
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => handleStartRoom(room.roomId)}
+                      onClick={() => handleStartChallenge(challenge.challengeId)}
                     >
                       Start
                     </Button>
@@ -132,10 +116,9 @@ const RoomsList = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </Container>
-      </>
+      </ Container>
+    </SampleDrawerAppBar>
   );
 };
 
-export default RoomsList;
-
+export default SampleChallengesList;

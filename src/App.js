@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/pages/LandingPage';
 import StudentLoginScreen from './components/pages/StudentLoginScreen';
 import StudentSignupScreen from './components/pages/StudentSignupScreen';
+import SampleChallengesList from './components/pages/SampleChallengesList';
+import SampleRooms from './components/rooms/SampleRooms';
 import HostSignupScreen from './components/pages/HostSignup';
 import StudentDashboard from './components/pages/StudentDashboard';
 import HostDashboard from './components/pages/HostDashboard';
@@ -28,6 +30,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<StudentLoginScreen />} />
+        <Route path="/sample-challenges-list" element={<SampleChallengesList />} />
+        <Route path="/sampleRoom/:challengeId" element={<SampleRooms />} />
         <Route path="/student-signup" element={<StudentSignupScreen />} />
         <Route path="/host-signup" element={<HostSignupScreen />} />
         <Route path="/student-dashboard/*" element={<StudentDashboard />} />

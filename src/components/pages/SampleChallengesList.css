@@ -1,0 +1,24 @@
+.MuiTableCell-root {
+  font-size: 1.2rem;
+}
+
+.MuiTableCell-head {
+  background-color: #eaeaea;
+}
+
+.MuiTableCell-body {
+  background-color: white;
+}
+
+.MuiTableRow-root:nth-of-type(even) .MuiTableCell-body {
+  background-color: #f2f2f2;
+}
+
+h1 {
+  font: 400 38px/1.5 'Roboto', sans-serif;
+}
+.header {
+  padding-top: 40px;
+  /* margin-bottom: 3rem; */
+  text-align: center;
+}

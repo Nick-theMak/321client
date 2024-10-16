@@ -6,7 +6,8 @@ import HostCompetition from './HostCompetition';
 
 const StartCompetition = () => {
   const [competitionCode, setCompetitionCode] = useState('');
-  const [maxTeamMembers, setMaxTeamMembers] = useState('');
+  const [maxTeamMembers, setMaxTeamMembers] = useState('5');
+  const [maxTeams, setMaxTeams] = useState('10');
   const [modules, setModules] = useState({
     beginnerCrypto: true,
     intermediateCrypto: true,
@@ -38,19 +39,26 @@ const StartCompetition = () => {
       </Routes><div className="start-competition">
               <h1>Configure the Competition</h1>
               <form>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                       <label>Competition Code</label>
                       <input
                           type="text"
                           value={competitionCode}
                           onChange={(e) => setCompetitionCode(e.target.value)} />
                       <button type="button" onClick={generateCode}>Generate Code</button>
-                  </div>
+                  </div> */}
                   <div className="form-group">
                       <label>Maximum Team Members</label>
                       <input
                           type="number"
                           value={maxTeamMembers}
+                          onChange={(e) => setMaxTeamMembers(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                      <label>Maximum Number of Teams</label>
+                      <input
+                          type="number"
+                          value={maxTeams}
                           onChange={(e) => setMaxTeamMembers(e.target.value)} />
                   </div>
                   <h2>Modify Modules</h2>
