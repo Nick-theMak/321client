@@ -19,11 +19,11 @@ const HostDashboard = () => {
       <Routes>
         <Route path="/" element={<HostHomePage />} />
         <Route path="past-competitions" element={<HostPastCompetitions />} />
-        <Route path="/host-competition" element={<HostConfigPage />} />
+        <Route path="host-competition" element={<HostConfigPage />} />
         <Route path="account-management" element={<HostAccountManagement />} />
         <Route path="accessibility-options" element={<AccessibilityOptions />} />
         <Route path="offline-resources" element={<OfflineResources />} />
-        <Route path="/live-monitoring/:competitionCode" element={<LiveMonitoringPage />} />
+        <Route path="live-monitoring/:competitionCode" element={<LiveMonitoringPage />} />
       </Routes>
     </>
   );

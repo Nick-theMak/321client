@@ -1,25 +1,56 @@
+// LiveMonitoringPage.jsx
 import React, { useState, useEffect } from 'react';
+import {
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Snackbar,
+  Alert,
+  Box,
+  Typography,
+} from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchLiveScores, fetchTeams, endCompetition, removeTeamMember } from '../networking/api'; // API calls
-import './LiveMonitoringPage.css';
+import {
+  fetchRankedTeams,
+  setCompetitionStatus,
+  removeTeamMember,
+  getCompetitionStatus,
+  getUnassignedStudents,
+  addStudentToTeam,
+} from '../networking/api';
+import { useAlert } from '../elements/hooks/useAlert';
 
 const LiveMonitoringPage = () => {
-  const { competitionCode } = useParams(); // Get the competition code from the route
-  const [teams, setTeams] = useState([]);
-  const [liveScores, setLiveScores] = useState([]);
+  const { competitionCode } = useParams();
+  const [rankedTeams, setRankedTeams] = useState([]);
+  const [unassignedStudents, setUnassignedStudents] = useState([]);
+  const [selectedUsername, setSelectedUsername] = useState('');
+  const [selectedTeamName, setSelectedTeamName] = useState('');
+  const [status, setStatus] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // List of possible statuses
+  const statuses = ['Started', 'In progress', 'Finished', 'Paused', 'Cancelled'];
+
+  // Initialize the custom alert hook
+  const { alertOpen, alertMessage, alertSeverity, showAlert, closeAlert } = useAlert();
 
   // Polling interval for real-time updates (5 seconds)
   useEffect(() => {
     const fetchCompetitionData = async () => {
       try {
-        const fetchedTeams = await fetchTeams(competitionCode);
-        const fetchedScores = await fetchLiveScores(competitionCode);
-        setTeams(fetchedTeams);
-        setLiveScores(fetchedScores);
+        const fetchedRankedTeams = await fetchRankedTeams(competitionCode);
+        const competitionStatus = await getCompetitionStatus(competitionCode);
+        const fetchedUnassignedStudents = await getUnassignedStudents(competitionCode);
+        setStatus(competitionStatus);
+        setRankedTeams(fetchedRankedTeams);
+        setUnassignedStudents(fetchedUnassignedStudents);
       } catch (error) {
         setError('Failed to fetch competition data: ' + (error.message || error));
+        showAlert('Failed to fetch competition data', 'error');
       }
     };
 
@@ -33,76 +64,200 @@ const LiveMonitoringPage = () => {
     return () => clearInterval(intervalId);
   }, [competitionCode]);
 
-  // Handle ending the competition
-  const handleEndCompetition = async () => {
+  // Handle changing the competition status
+  const handleStatusChange = async (event) => {
+    const newStatus = event.target.value;
     try {
-      await endCompetition(competitionCode);
-      alert('Competition ended successfully');
-      navigate('/host-dashboard'); // Redirect back to the dashboard after ending
+      await setCompetitionStatus(competitionCode, newStatus);
+      setStatus(newStatus);
+      showAlert(`Competition status changed to ${newStatus}`, 'success');
     } catch (error) {
-      setError('Failed to end competition: ' + (error.message || error));
+      setError('Failed to change competition status: ' + (error.message || error));
+      showAlert('Failed to change competition status', 'error');
     }
   };
 
   // Handle removing a member from a team
-  const handleRemoveMember = async (teamId, memberUsername) => {
+  const handleRemoveMember = async (teamName, username) => {
     try {
-      await removeTeamMember(teamId, memberUsername);
-      alert(`Removed ${memberUsername} from the team.`);
+      await removeTeamMember(teamName, username);
+      showAlert(`Removed ${username} from the team.`, 'success');
       // Refresh teams after modification
-      const fetchedTeams = await fetchTeams(competitionCode);
-      setTeams(fetchedTeams);
+      const fetchedRankedTeams = await fetchRankedTeams(competitionCode);
+      setRankedTeams(fetchedRankedTeams);
     } catch (error) {
       setError('Failed to remove member: ' + (error.message || error));
+      showAlert('Failed to remove member', 'error');
+    }
+  };
+
+  // Handle adding a student to a team
+  const handleAddStudentToTeam = async () => {
+    if (!selectedUsername || !selectedTeamName) {
+      showAlert('Please select a student and a team.', 'warning');
+      return;
+    }
+
+    try {
+      await addStudentToTeam(competitionCode, selectedTeamName, selectedUsername);
+      showAlert('Student added to team successfully.', 'success');
+      // Refresh data
+      const fetchedRankedTeams = await fetchRankedTeams(competitionCode);
+      const fetchedUnassignedStudents = await getUnassignedStudents(competitionCode);
+      setRankedTeams(fetchedRankedTeams);
+      setUnassignedStudents(fetchedUnassignedStudents);
+      // Reset selections
+      setSelectedUsername('');
+      setSelectedTeamName('');
+    } catch (error) {
+      setError('Failed to add student to team: ' + (error.details || error));
+      showAlert('Failed to add student to team: ' + (error.details), 'error');
     }
   };
 
   return (
-    <div className="live-monitoring-page">
-      <h1>Competition Code: {competitionCode}</h1>
+    <Box sx={{ padding: '20px' }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate(-1)}
+        sx={{ marginBottom: '20px' }}
+      >
+        ← Back
+      </Button>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Typography variant="h1" sx={{ fontSize: '28px', marginBottom: '20px' }}>
+        Competition Code: {competitionCode}
+      </Typography>
 
-      {/* Teams Section */}
-      <div className="team-list">
-        <h2>Teams</h2>
-        {teams.length === 0 && <p>No teams have joined yet.</p>}
-        {teams.map((team) => (
-          <div key={team.id} className="team">
-            <h3>{team.name}</h3>
-            <p>Members: 
+      {/* Competition Status Dropdown */}
+      <FormControl variant="outlined" sx={{ minWidth: 200, marginBottom: '20px' }}>
+        <InputLabel>Status</InputLabel>
+        <Select value={status} onChange={handleStatusChange} label="Status">
+          {statuses.map((stat) => (
+            <MenuItem key={stat} value={stat}>
+              {stat}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* Add Student to Team Section */}
+      <Box sx={{ marginTop: '20px' }}>
+        <Typography variant="h2" sx={{ fontSize: '24px', marginBottom: '20px' }}>
+          Add Student to Team
+        </Typography>
+
+        <FormControl sx={{ minWidth: 200, marginRight: '20px' }}>
+          <InputLabel>Unassigned Students</InputLabel>
+          <Select
+            value={selectedUsername}
+            onChange={(e) => setSelectedUsername(e.target.value)}
+            label="Unassigned Students"
+          >
+            {unassignedStudents.map((student) => (
+              <MenuItem key={student.username} value={student.username}>
+                {student.username}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 200, marginRight: '20px' }}>
+          <InputLabel>Teams</InputLabel>
+          <Select
+            value={selectedTeamName}
+            onChange={(e) => setSelectedTeamName(e.target.value)}
+            label="Teams"
+          >
+            {rankedTeams.map((team) => (
+              <MenuItem key={team.teamName} value={team.teamName}>
+                {team.teamName} (Members: {team.numMembers}/{team.maxMembers})
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button variant="contained" color="primary" onClick={handleAddStudentToTeam}>
+          Add Student to Team
+        </Button>
+      </Box>
+
+      {/* Teams and Scores Section */}
+      <Box sx={{ marginTop: '20px' }}>
+        <Typography variant="h2" sx={{ fontSize: '24px', marginBottom: '20px' }}>
+          Teams and Live Rankings
+        </Typography>
+
+        {rankedTeams.length === 0 && (
+          <Typography>No teams have joined yet.</Typography>
+        )}
+
+        {rankedTeams.map((team) => (
+          <Box
+            key={team.teamName}
+            sx={{
+              backgroundColor: '#f5f5f5',
+              padding: '15px',
+              marginBottom: '10px',
+              borderRadius: '5px',
+            }}
+          >
+            <Typography variant="h3" sx={{ fontSize: '18px', marginBottom: '10px' }}>
+              Rank {team.rank}: {team.teamName}
+            </Typography>
+            <Typography>Score: {team.score} points</Typography>
+            <Typography>
+              Members:
               {team.members.map((member) => (
-                <span key={member} className="team-member">
-                  {member} 
-                  <button className="remove-member-button" onClick={() => handleRemoveMember(team.id, member)}>
+                <Box
+                  key={member.username}
+                  component="span"
+                  sx={{ display: 'inline-block', marginRight: '10px' }}
+                >
+                  {member.username}
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      backgroundColor: '#f44336',
+                      color: 'white',
+                      padding: '5px 10px',
+                      marginLeft: '10px',
+                      borderRadius: '3px',
+                      textTransform: 'none',
+                      '&:hover': {
+                        backgroundColor: '#d32f2f',
+                      },
+                    }}
+                    onClick={() => handleRemoveMember(team.teamName, member.username)}
+                  >
                     Remove
-                  </button>
-                </span>
+                  </Button>
+                </Box>
               ))}
-            </p>
-          </div>
+            </Typography>
+          </Box>
         ))}
-      </div>
+      </Box>
 
-      {/* Scores Section */}
-      <div className="score-list">
-        <h2>Live Scores</h2>
-        {liveScores.length === 0 && <p>No scores available yet.</p>}
-        {liveScores.map((score) => (
-          <div key={score.teamId} className="score">
-            <h3>{score.teamName}: {score.points} points</h3>
-          </div>
-        ))}
-      </div>
-
-      {/* End Competition Button */}
-      <div className="end-competition-section">
-        <button onClick={handleEndCompetition} className="end-competition-button">
-          End Competition
-        </button>
-      </div>
-    </div>
+      {/* Alert Component */}
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={closeAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={closeAlert} severity={alertSeverity} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 };
 
 export default LiveMonitoringPage;
+
+
+
+

@@ -58,9 +58,10 @@ const HostHomePage = () => {
                 <li key={competition.id}>
                   <p>
                     <strong>{competition.competitionName}</strong> <br />
+                    Status: {competition.status} <br />
                     Code: {competition.competitionCode}
                   </p>
-                  <button onClick={() => handleNavigation(`/live-monitoring/${competition.competitionCode}`)}>
+                  <button onClick={() => handleNavigation(`/host-dashboard/live-monitoring/${competition.competitionCode}`)}>
                     Monitor Competition
                   </button>
                 </li>

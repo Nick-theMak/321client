@@ -53,8 +53,8 @@ const CompetitionHomePage = () => {
     try {
       const data = await getUserTeamPointsAndRanking(username);
       if (data) {
-        setTeamPoints(data.teamPoints);
-        setRanking(data.ranking);
+        setTeamPoints(data.score);
+        setRanking(data.rank);
       } else {
         setTeamPoints(null);
         setRanking(null);

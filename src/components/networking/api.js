@@ -172,7 +172,7 @@ export const getUserTeamPointsAndRanking = async (username) => {
   try {
     // Placeholder for the actual API call
     // The real endpoint might look like `/user/${username}/team-points-ranking`
-    const response = await api.get(`/user/${username}/team-points-ranking`);
+    const response = await api.get(`/team/${username}`);
     return response.data; // Assuming the API returns an object with teamPoints and ranking
   } catch (error) {
     console.error('Failed to fetch team points and ranking:', error);
@@ -180,7 +180,14 @@ export const getUserTeamPointsAndRanking = async (username) => {
   }
 };
 
-
+export const fetchRankedTeams = async (competitionCode) => {
+  try {
+    const response = await api.get(`/competition/${competitionCode}/rankedTeamsCode`);
+    return response.data; // This should include rank and score
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
 
 // Fetch teams
 export const getTeams = async () => {
@@ -192,16 +199,39 @@ export const getTeams = async () => {
   }
 };
 
+export const getUnassignedStudents = async () => {
+  try {
+    const response = await api.get('/student/notInTeam');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 
+}
 
+export const addStudentToTeam = async (competitionCode, teamName, username) => {
+  try {
+    const response = await api.post(
+      `/competition/${competitionCode}/teams/${teamName}/add-student`,
+      null,
+      { params: { username } }
+    );
+    console.log("Student added to team", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to add student to team", error.response.data);
+    throw error.response ? error.response.data : error;
+  }
+};
 
 
 // Competition-related API
-export const createCompetition = async (maxTeams, maxTeamSize) => {
-  console.log(maxTeams, maxTeamSize);
+export const createCompetition = async (name, maxTeams, maxTeamSize) => {
+  console.log(name, maxTeams, maxTeamSize);
   try {
     const response = await axiosInstance.post('/competition/create', null, {
       params: {
+        name: name,
         maxTeams: parseInt(maxTeams),
         maxTeamSize: parseInt(maxTeamSize),
       },
@@ -313,11 +343,24 @@ export const getAllCompetitions = async () => {
   }
 };
 
-
-// End the competition
-export const endCompetition = async (competitionCode) => {
+// Set the competition
+export const setCompetitionStatus = async (competitionCode, status) => {
   try {
-    const response = await axiosInstance.post(`/competition/${competitionCode}/end`);
+    const response = await axiosInstance.post(`/competition/${competitionCode}/setStatus`, null, {
+      params: {
+        status: status,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Start the competition
+export const getCompetitionStatus = async (competitionCode) => {
+  try {
+    const response = await axiosInstance.get(`/competition/${competitionCode}/status`);
     return response.data;
   } catch (error) {
     throw error;

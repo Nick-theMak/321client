@@ -27,6 +27,7 @@ function StudentAccountManagement() {
         const parsedUserDetails = JSON.parse(previousUserDetails);
         console.log(previousUserDetails);
         console.log("Username: ", parsedUserDetails.username);
+        console.log("NEW DETAILS: ", formData);
         if (formData.email === ''
             || formData.username === ''
             || formData.password === ''
@@ -102,7 +103,10 @@ function StudentAccountManagement() {
                     <TextField
                         label="Password"
                         type="password"
+                        name="password"
                         placeholder="*******"
+                        value={formData.password}
+                        onChange={handleChange}
                         variant="outlined"
                         fullWidth
                         margin="normal"
