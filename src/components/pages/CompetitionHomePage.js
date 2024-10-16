@@ -106,7 +106,7 @@ const CompetitionHomePage = () => {
     } else {
       console.log(`Starting challenge ${challengeId}`);
     }
-    navigate(`/rooms/${challengeId}`); // Redirect to lobby
+    navigate(`/rooms-two/${challengeId}`); // Redirect to lobby
   };
 
   // Handle navigation to the JoinCompetition page
