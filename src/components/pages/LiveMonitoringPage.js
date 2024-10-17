@@ -1,4 +1,3 @@
-// LiveMonitoringPage.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Button,
@@ -10,6 +9,7 @@ import {
   Alert,
   Box,
   Typography,
+  TextField, // Import TextField
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -19,6 +19,7 @@ import {
   getCompetitionStatus,
   getUnassignedStudents,
   addStudentToTeam,
+  createTeam, // Import createTeam
 } from '../networking/api';
 import { useAlert } from '../elements/hooks/useAlert';
 
@@ -28,8 +29,8 @@ const LiveMonitoringPage = () => {
   const [unassignedStudents, setUnassignedStudents] = useState([]);
   const [selectedUsername, setSelectedUsername] = useState('');
   const [selectedTeamName, setSelectedTeamName] = useState('');
+  const [newTeamName, setNewTeamName] = useState(''); // New team name state
   const [status, setStatus] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   // List of possible statuses
@@ -49,7 +50,6 @@ const LiveMonitoringPage = () => {
         setRankedTeams(fetchedRankedTeams);
         setUnassignedStudents(fetchedUnassignedStudents);
       } catch (error) {
-        setError('Failed to fetch competition data: ' + (error.message || error));
         showAlert('Failed to fetch competition data', 'error');
       }
     };
@@ -72,7 +72,6 @@ const LiveMonitoringPage = () => {
       setStatus(newStatus);
       showAlert(`Competition status changed to ${newStatus}`, 'success');
     } catch (error) {
-      setError('Failed to change competition status: ' + (error.message || error));
       showAlert('Failed to change competition status', 'error');
     }
   };
@@ -80,13 +79,12 @@ const LiveMonitoringPage = () => {
   // Handle removing a member from a team
   const handleRemoveMember = async (teamName, username) => {
     try {
-      await removeTeamMember(teamName, username);
+      await removeTeamMember(competitionCode, teamName, username);
       showAlert(`Removed ${username} from the team.`, 'success');
       // Refresh teams after modification
       const fetchedRankedTeams = await fetchRankedTeams(competitionCode);
       setRankedTeams(fetchedRankedTeams);
     } catch (error) {
-      setError('Failed to remove member: ' + (error.message || error));
       showAlert('Failed to remove member', 'error');
     }
   };
@@ -110,8 +108,27 @@ const LiveMonitoringPage = () => {
       setSelectedUsername('');
       setSelectedTeamName('');
     } catch (error) {
-      setError('Failed to add student to team: ' + (error.details || error));
-      showAlert('Failed to add student to team: ' + (error.details), 'error');
+      showAlert('Failed to add student to team', 'error');
+    }
+  };
+
+  // Handle creating a new team
+  const handleCreateTeam = async () => {
+    if (!newTeamName.trim()) {
+      showAlert('Please enter a team name.', 'warning');
+      return;
+    }
+
+    try {
+      await createTeam(competitionCode, newTeamName.trim());
+      showAlert('Team created successfully.', 'success');
+      // Refresh teams after creation
+      const fetchedRankedTeams = await fetchRankedTeams(competitionCode);
+      setRankedTeams(fetchedRankedTeams);
+      // Clear the input field
+      setNewTeamName('');
+    } catch (error) {
+      showAlert('Failed to create team: ' + (error.details || error.message || error), 'error');
     }
   };
 
@@ -141,6 +158,24 @@ const LiveMonitoringPage = () => {
           ))}
         </Select>
       </FormControl>
+
+      {/* Add New Team Section */}
+      <Box sx={{ marginTop: '20px' }}>
+        <Typography variant="h2" sx={{ fontSize: '24px', marginBottom: '20px' }}>
+          Add New Team
+        </Typography>
+
+        <TextField
+          label="Team Name"
+          value={newTeamName}
+          onChange={(e) => setNewTeamName(e.target.value)}
+          sx={{ marginRight: '20px', width: '300px' }}
+        />
+
+        <Button variant="contained" color="primary" onClick={handleCreateTeam}>
+          Create Team
+        </Button>
+      </Box>
 
       {/* Add Student to Team Section */}
       <Box sx={{ marginTop: '20px' }}>
@@ -257,7 +292,5 @@ const LiveMonitoringPage = () => {
 };
 
 export default LiveMonitoringPage;
-
-
 
 

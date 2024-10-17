@@ -242,18 +242,6 @@ export const createCompetition = async (name, maxTeams, maxTeamSize) => {
   }
 };
 
-// Team-related API
-export const createTeam = async (competitionId, teamName) => {
-  try {
-    const response = await axiosInstance.post(`/team/create?competitionId=${competitionId}`, {
-      teamName,
-    });
-    return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : new Error('Server error');
-  }
-};
-
 export const addTeamMember = async (teamPassword, studentUsername) => {
   try {
     const response = await axiosInstance.post(`/team/addMember`, null, {
@@ -419,4 +407,15 @@ export const fetchRoomQuestions = async (roomId) => {
   }
 };
 
-
+export const createTeam = async (competitionCode, teamName) => {
+  try {
+    const response = await api.post(
+      `/competition/${competitionCode}/teams/create`,
+      null,
+      { params: { teamName } }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
